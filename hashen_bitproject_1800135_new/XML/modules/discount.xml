@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="discount" to-string-ts="discount.code + ' ' + discount.name" to-string-java="discount.getCode() + #quat;-#quat; + discount.getName()">
+    <code length="10" prefix="DC" searchable="yes" exist-on-table="yes"/>
+    <group>
+        <varchar-property basic="yes" exist-on-table="yes"  width="6" name="name" label="Discount name" example="Samurdhi discount" required="yes" searchable="yes" />
+        <reference-property width="6" name="discountstatus" label="Disount status" referenced-from="discountstatus" service-method="getAll" to-string-ts="discountstatus.name" to-string-java="discountstatus.getName()"/>
+
+    </group>
+
+    <group>
+        <reference-property name="discounttype" label="Discount type" to-string-java="discounttype.getName()" to-string-ts="discounttype.name" service-method="getAll" referenced-from="discounttype" width="6"/>
+        <decimal-property name="value" label="Value" example="100" precision="10" scale="2" min="0" max="10000000" exist-on-table="yes" width="6"/>
+    </group>
+    <multiple-reference-property name="connectiontype" label="Connection type" to-string-java="connectiontype.getName()" to-string-ts="connectiontype.name" service-method="getAllBasic"
+                                 referenced-from="connectiontype"/>
+    <group>
+        <text-property name="description" label="Description" example="this is the description" max-length="5000" required="no" width="12"/>
+    </group>
+
+
+</regular-module>

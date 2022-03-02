@@ -1,0 +1,12 @@
+<header class="row bg-transparent">
+  <div class="col-sm-6">
+    <h1 class="mat-title">{{title}}</h1>
+  </div>
+  <div class="col-sm-6">
+    <ol class="breadcrumb bg-transparent text-left text-sm-right mt-sm-3">
+      <li class="breadcrumb-item" [class.active]="i+1 === breadcrumbSegments.length" *ngFor="let segment of breadcrumbSegments; let i = index">
+        {{segment}}
+      </li>
+    </ol>
+  </div>
+</header>

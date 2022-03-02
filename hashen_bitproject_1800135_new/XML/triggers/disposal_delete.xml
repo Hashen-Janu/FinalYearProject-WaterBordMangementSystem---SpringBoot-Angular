@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE trigger SYSTEM "./../dtd/trigger.dtd">
+<trigger name="disposal_delete" event="AFTER_DELETE" table="disposal">
+    update item set qty = qty + OLD.qty where id = OLD.item_id;
+</trigger>

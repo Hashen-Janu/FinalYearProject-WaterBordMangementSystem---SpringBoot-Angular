@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="nametitle" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="10"/>
+    </properties>
+    <values>
+        <value><data>Mr.</data></value>
+        <value><data>Miss</data></value>
+        <value><data>Mrs.</data></value>
+        <value><data>Rev.</data></value>
+        <value><data>Dr.</data></value>
+    </values>
+</seed>

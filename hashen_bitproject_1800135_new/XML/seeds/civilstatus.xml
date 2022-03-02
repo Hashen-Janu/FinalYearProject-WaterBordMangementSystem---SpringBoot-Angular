@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="civilstatus" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="12"/>
+    </properties>
+    <values>
+        <value><data>Single</data></value>
+        <value><data>Married</data></value>
+        <value><data>Other</data></value>
+    </values>
+</seed>

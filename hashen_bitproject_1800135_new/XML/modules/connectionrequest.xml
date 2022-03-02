@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="connectionrequest" to-string-ts="connectionrequest.code" to-string-java="connectionrequest.getCode()">
+    <code length="10" prefix="CR" searchable="yes" exist-on-table="yes"/>
+
+    <group>
+        <reference-property basic="yes" width="4" name="consumer" label="Select Consumer name" to-string-java="consumer.getFirstname()" to-string-ts="consumer.firstname" service-method="getAllBasic" exist-on-table="yes" searchable="yes"
+                            referenced-from="consumer"/>
+        <char-property width="4" name="mobile" label="Mobile Number" unique="yes" example="0766123045" size="10"  required="yes" pattern="^[0][0-9]{9}$"/>
+        <char-property width="4" name="land" label="Land Number" unique="yes" example="0766123045" size="10" pattern="^[0][0-9]{9}$"/>
+    </group>
+    <group>
+        <varchar-property name="pobox" label="Post box" example="059" required="yes" width="4"/>
+        <varchar-property name="street" label="Street" example="Grmasanwrdhana road" required="yes" exist-on-table="yes" searchable="yes" width="4"/>
+        <reference-property basic="yes" name="gramaniladharidiv" label="Gramaniladhari division" to-string-java="gramaniladharidiv.getName()" to-string-ts="gramaniladharidiv.name" service-method="getAll" exist-on-table="yes" searchable="yes" width="4"
+                            referenced-from="gramaniladharidiv" required="yes"/>
+    </group>
+    <group>
+        <text-property name="postaladdress" label="Postal address" example="....." required="yes" width="12"/>
+    </group>
+
+    <sub-module name="connectionrequestitem" label="Connection request item" to-string-ts="connectionrequestitem.item.name" to-string-java="connectionrequestitem.getItem().getName()">
+        <reference-property name="item" label="Item" to-string-java="item.getName()" to-string-ts="item.name" service-method="getAllBasic" referenced-from="item" searchable="yes" required="yes"/>
+        <decimal-property name="qty" label="Quantity" example="5" precision="13" scale="3" min="0" max="10000000" required="yes"/>
+        <decimal-property name="unitprice" label="Unit price" example="Rs.50" precision="10" scale="2" min="0" max="10000000"/>
+    </sub-module>
+    <group>
+        <decimal-property name="appicationfee" label="Apllication Fee" example="Rs.5000" precision="10" scale="2" min="0" max="10000000" width="4" exist-on-table="yes" required="yes"/>
+        <decimal-property name="connectionfee" label="Connection Fee" example="Rs.5000" precision="10" scale="2" min="0" max="10000000" width="4" exist-on-table="yes" required="yes"/>
+        <decimal-property name="laborcost" label="Labor cost" example="Rs.800" precision="10" scale="2" min="0" max="10000000" width="4" exist-on-table="yes" required="yes"/>
+    </group>
+    <group>
+        <decimal-property name="secdeposit" label="Sequrity diposit" example="Rs.1500" precision="10" scale="2" min="0" max="10000000" width="4"  required="yes"/>
+        <decimal-property name="nonrefdeposit" label="Non refundeble deposit" example="Rs.5000" precision="10" scale="2" min="0" max="10000000" width="4"  required="yes"/>
+        <decimal-property name="vat" label="Vat" example="Rs.800" precision="10" scale="2" min="0" max="10000000" width="4" required="yes"/>
+    </group>
+    <group>
+        <reference-property name="placetype" label="Place Type" to-string-java="placetype.getName()" to-string-ts="placetype.name" service-method="getAll" exist-on-table="yes" searchable="yes" width="4"
+                            referenced-from="placetype"/>
+        <reference-property name="ownershiptype" label="Owner ship Type" to-string-java="ownershiptype.getName()" to-string-ts="ownershiptype.name" service-method="getAll"  width="4"
+                            referenced-from="ownershiptype"/>
+        <reference-property name="connectiontype" label="Connection Type" to-string-java="connectiontype.getName()" to-string-ts="connectiontype.name" service-method="getAllBasic"  width="4"
+                            referenced-from="connectiontype"/>
+
+    </group>
+    <group>
+        <reference-property name="connectionrequeststatus" label="Connection request status" to-string-java="connectionrequeststatus.getName()" to-string-ts="connectionrequeststatus" service-method="getAll"
+                            referenced-from="connectionrequeststatus" width="12" insertable="no" required="yes" default-value="1"/>
+    </group>
+
+    <multiple-reference-property name="discount" label="Discount" to-string-java="discount.getName()" to-string-ts="discount.name" service-method="getAllBasic"
+                                 referenced-from="discount"/>
+    <file-property basic="yes" name="payslip" label="Payslip Photo" accept="image/*" exist-on-table="yes"/>
+
+    <group>
+        <varchar-property name="description" label="Description" example="....." max-length="5000" required="no" width="12"/>
+    </group>
+
+</regular-module>

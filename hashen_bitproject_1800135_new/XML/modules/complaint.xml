@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="complaint" to-string-ts="complaint.code" to-string-java="complaint.getCode()">
+    <code length="10" prefix="CM" searchable="yes" exist-on-table="yes"/>
+    <group>
+
+        <reference-property name="connection" label="Connection" to-string-java="connection.getConsumer().getFirstname()"  basic="yes" to-string-ts="connection.consumer.firstname" width="6" service-method="getAllBasic" referenced-from="connection" searchable="yes" exist-on-table="yes" required="yes"/>
+        <reference-property name="complainttype" label="Type" to-string-java="complainttype.getName()" to-string-ts="complainttype.name" service-method="getAll" referenced-from="complainttype" required="yes" searchable="yes" width="6"/>
+
+    </group>
+    <group>
+
+        <varchar-property width="6" name="contact" label="Mobile Number" unique="yes" example="0766123045" max-length="10" min-length="9" required="yes" pattern="^[0][0-9]{9}$"/>
+
+        <date-property name="date" label="Complaint date" example="01/05/2021" required="yes" width="6" exist-on-table="yes"/>
+    </group>
+
+    <group>
+
+        <reference-property width="6" required="yes" default-value="1" insertable="no" searchable="yes" exist-on-table="yes" name="complaintstatus" label="Complaint Status" referenced-from="complaintstatus" service-method="getAll" to-string-java="complaintstatus.getName()" to-string-ts="complaintstatus.name"/>
+
+    </group>
+    <group>
+        <text-property basic="yes" name="title" label="Title" example="...." max-length="5000" required="yes" width="12"/>
+    </group>
+    <group>
+        <text-property basic="yes" name="location" label="Location" example="kiula Junction" max-length="5000" required="yes" width="12"/>
+    </group>
+    <group>
+        <text-property name="description" label="Description" example="this is the description" max-length="5000" required="no" width="12"/>
+    </group>
+
+</regular-module>

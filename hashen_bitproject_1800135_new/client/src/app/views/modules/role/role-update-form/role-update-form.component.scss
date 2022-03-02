@@ -1,0 +1,49 @@
+.module-box-container {
+  border-radius: 5px;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  padding: 1px 13px;
+  &:hover{
+    border: 2px solid currentColor;
+    padding: 0px 12px;
+  }
+  &:active{
+    border: 2px solid #019986;
+    padding: 0px 12px;
+  }
+  transition: border-bottom-color 0.25s  ease-out,
+  border-top-color 0.25s  ease-out,
+  border-left-color 0.25s  ease-out,
+  border-right-color 0.25s ease-out;
+}
+
+.module-box-container-error{
+  border: 2px solid #e00606 !important;
+  padding: 0px 12px;
+}
+
+
+.module-box {
+  .module-box-table {
+    background-color: rgba(128, 128, 128, 0.05);
+    border-radius: 5px;
+    padding: 0px 15px;
+    margin-bottom: 20px;
+
+    .row {
+      border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+    }
+
+    :last-child {
+      border: none;
+    }
+
+  }
+}
+
+.error-message{
+  color: #e00606;
+  font-weight: 400;
+  line-height: 1.125;
+  font-family: Roboto, serif;
+  letter-spacing: 1.5px;
+}

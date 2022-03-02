@@ -1,0 +1,3 @@
+<app-loading *ngIf="!isCheckedConfiguration"></app-loading>
+<app-admin-configuration *ngIf="isCheckedConfiguration && !isConfigured"></app-admin-configuration>
+<router-outlet *ngIf="isCheckedConfiguration && isConfigured"></router-outlet>

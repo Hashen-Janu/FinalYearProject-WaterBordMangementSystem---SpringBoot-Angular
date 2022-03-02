@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="vehicletype" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="45"/>
+    </properties>
+    <values>
+        <value><data>Lorry</data></value>
+        <value><data>Cab</data></value>
+        <value><data>Tractor</data></value>
+    </values>
+</seed>

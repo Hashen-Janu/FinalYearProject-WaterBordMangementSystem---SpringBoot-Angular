@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="itemreturn" to-string-ts="itemreturn.code" to-string-java="itemreturn.getCode()">
+    <code length="10" prefix="IR" searchable="yes" exist-on-table="yes"/>
+    <group>
+        <text-property name="reason" label="Reason" example="....." max-length="5000" required="no" width="6"/>
+        <date-property name="date" label="Item recive date" example="01/05/2021" required="yes" exist-on-table="yes" width="6" />
+
+    </group>
+
+    <sub-module name="itemreturnitem" label="Return Items" to-string-ts="itemreturnitem.item.name" to-string-java="itemreturnitem.getItem().getName()">
+        <reference-property name="item" label="Item" to-string-java="item.getName()" to-string-ts="item.name" service-method="getAllBasic" referenced-from="item" searchable="yes" required="yes"/>
+        <decimal-property name="qty" label="Quantity" example="5" precision="13" scale="3" min="0" max="10000000" required="yes"/>
+    </sub-module>
+
+
+</regular-module>

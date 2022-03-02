@@ -1,0 +1,76 @@
+<app-no-privilege *ngIf="!privilege.update" message="No privilege to change reconnectionrequest details"></app-no-privilege>
+<div *ngIf="this.reconnectionrequest && privilege.update">
+  <app-page-header
+    title="Reconnectionrequest Change Form of {{ reconnectionrequest.code }}"
+    [breadcrumbSegments]="['Reconnectionrequests', 'Show All Reconnectionrequests', 'Change Details of ' + reconnectionrequest.code]"
+  ></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Connection</mat-label>
+                <mat-select formControlName="connection" required>
+                  <mat-option *ngFor="let connection of connections" [value]="connection.id">{{connection.consumer.nametitle.name}}{{connection.consumer.firstname}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="connectionField.invalid">
+                  <span *ngIf="connectionField.errors.required">Select at lease one connection</span>
+                  <span *ngIf="connectionField.errors.server">{{connectionField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Disconnect request date</mat-label>
+                <input matInput [matDatepicker]="pickerdate" formControlName="date" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerdate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerdate></mat-datepicker>
+                <mat-hint>Ex: 01/05/2021</mat-hint>
+                <mat-error *ngIf="dateField.invalid">
+                  <span *ngIf="dateField.errors.required">Disconnect request date is required</span>
+                  <span *ngIf="dateField.errors.server">{{dateField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Reconnection Status</mat-label>
+                <mat-select formControlName="reconnectionrequeststatus" required>
+                  <mat-option *ngFor="let reconnectionrequeststatus of reconnectionrequeststatuses" [value]="reconnectionrequeststatus.id">{{reconnectionrequeststatus.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="reconnectionrequeststatusField.invalid">
+                  <span *ngIf="reconnectionrequeststatusField.errors.required">Select at lease one reconnection status</span>
+                  <span *ngIf="reconnectionrequeststatusField.errors.server">{{reconnectionrequeststatusField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" ></textarea>
+                <mat-hint>Ex: this is the description</mat-hint>
+                <mat-error *ngIf="descriptionField.invalid">
+                  <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+                  <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+                  <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 5000 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/reconnectionrequests" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Reconnectionrequests</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="button" (click)="discardChanges()"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

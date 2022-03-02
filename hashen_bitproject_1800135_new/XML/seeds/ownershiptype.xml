@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="ownershiptype" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="25"/>
+    </properties>
+    <values>
+        <value><data>Owner</data></value>
+        <value><data>Tenant</data></value>
+        <value><data>Lender</data></value>
+    </values>
+</seed>

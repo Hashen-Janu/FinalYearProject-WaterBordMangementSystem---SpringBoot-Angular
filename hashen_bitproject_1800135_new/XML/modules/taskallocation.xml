@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="taskallocation" to-string-ts="taskallocation.code" to-string-java="taskallocation.getCode()">
+    <code length="9" exist-on-table="yes" searchable="yes" prefix="TA"/>
+
+    <group>
+        <date-property name="date" label="Task allocation date" example="01/05/2021" required="yes" width="4"/>
+        <time-property name="time" label="Task allocation time" example="Allocate Time 10.00AM" exist-on-table="yes" required="yes" width="4"/>
+        <reference-property name="tasktype" label="Task type" to-string-java="tasktype.getName()" to-string-ts="tasktype.name" service-method="getAll"
+                            referenced-from="tasktype" width="4" required="yes" searchable="yes" />
+    </group>
+    <group>
+        <varchar-property name="pobox" label="Post box" example="059" required="yes" width="4"/>
+        <varchar-property name="street" label="Street" example="Grmasanwrdhana road" required="yes" exist-on-table="yes" width="4"/>
+        <reference-property basic="yes" name="gramaniladharidiv" label="Gramaniladhari division" to-string-java="gramaniladharidiv.getName()" to-string-ts="gramaniladharidiv.name" service-method="getAll" exist-on-table="yes" searchable="yes" width="4"
+                            referenced-from="gramaniladharidiv"/>
+    </group>
+    <group>
+        <reference-property name="connectionrequest" label="Connection Request" to-string-java="connectionrequest.getConsumer().getName()" to-string-ts="connectionrequest.consumer.name" service-method="getAllBasic"
+                            referenced-from="connectionrequest" required="yes" width="4"/>
+        <reference-property name="disconnectionrequest" label="Disconnection request" to-string-java="disconnectionrequest.getCode()" to-string-ts="disconnectionrequest.code" service-method="getAllBasic"
+                            referenced-from="disconnectionrequest" required="yes" width="4" />
+        <reference-property name="reconnectionrequest" label="Reconnection request" to-string-java="reconnectionrequest.getCode()" to-string-ts="reconnectionrequest.code" service-method="getAllBasic"
+                            referenced-from="reconnectionrequest" required="yes" width="4" />
+    </group>
+    <group>
+
+        <reference-property name="modificationrequest" label="Reconnection request" to-string-java="modificationrequest.getCode()" to-string-ts="modificationrequest.code" service-method="getAllBasic"
+                            referenced-from="modificationrequest" required="yes" width="4" />
+        <reference-property name="complaint" label="Complaint" to-string-java="complaint.getCode()" to-string-ts="complaint.code" service-method="getAllBasic"
+                            referenced-from="complaint" required="yes" width="4" />
+        <reference-property name="taskallocationstatus" label="Status" to-string-java="taskallocationstatus.getName()" to-string-ts="taskallocationstatus.name" service-method="getAll"
+                            referenced-from="taskallocationstatus" required="yes" width="4" />
+    </group>
+    <group>
+        <text-property name="remarks" label="Remarks" example="...." max-length="5000"  width="12"/>
+
+    </group>
+    <sub-module name="taskallocationitem" label="Task allocation" to-string-ts="taskallocationitem.item.name" to-string-java="taskallocationitem.getItem().getName()">
+        <reference-property name="item" label="Item" to-string-java="item.getName()" to-string-ts="item.name" service-method="getAllBasic" referenced-from="item" searchable="yes" required="yes"/>
+        <int-property name="qty" label="Quantity" example="5"  min="1" max="2000" required="yes"/>
+    </sub-module>
+    <multiple-reference-property name="vehicle" label="Vehicle" to-string-java="vehicle.getNo()" to-string-ts="vehicle.no" service-method="getAllBasic"
+                                 referenced-from="vehicle" min-count="1" max-count="3"/>
+    <multiple-reference-property name="employee" label="Employee" to-string-java="employee.getCallingname()" to-string-ts="employee.callingname" service-method="getAllBasic"
+                                 referenced-from="employee" min-count="1" max-count="10"/>
+
+</regular-module>

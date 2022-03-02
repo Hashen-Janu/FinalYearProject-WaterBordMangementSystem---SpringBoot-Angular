@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="consumer" to-string-ts="consumer.code + ' ' + consumer.firstname" to-string-java="consumer.getCode() + #quat;-#quat; + consumer.getFirstname()">
+    <code length="10" prefix="CM" searchable="yes" exist-on-table="yes"/>
+    <reference-property basic="yes" exist-on-table="yes" searchable="yes" required="yes" name="consumertype" label="Type" referenced-from="consumertype" service-method="getAll" to-string-java="consumertype.getName()" to-string-ts="consumertype.name" width="4"/>
+    <group>
+        <reference-property basic="yes" exist-on-table="yes"  required="yes" width="2" name="nametitle" label="Title" live="no" referenced-from="nametitle" service-method="getAll" to-string-java="nametitle.getName()" to-string-ts="nametitle.name"/>
+        <varchar-property basic="yes" exist-on-table="yes" searchable="yes" required="yes" width="5" name="firstname" label="First Name" example="Kamal "/>
+        <varchar-property basic="yes" searchable="no" required="yes" width="5" name="lastname" label="Last Name" example="Perera "/>
+    </group>
+    <group>
+        <varchar-property exist-on-table="yes" searchable="yes" required="yes" name="nic" label="NIC Number" example="789456123V" max-length="12" min-length="10" width="6" pattern="^(([0-9]{12})|([0-9]{9}[VvXx]))$"/>
+        <reference-property required="yes" width="6" name="gender" label="Gender" referenced-from="gender" service-method="getAll" to-string-java="gender.getName()" to-string-ts="gender.name"/>
+    </group>
+    <group>
+        <char-property name="contact1" label="Primary contact" example="0789456123" size="10" required="yes" width="6" pattern="^([0][0-9]{9})$"/>
+        <char-property name="contact2" label="Alternate contact" example="0789456123" size="10" width="6" pattern="^([0][0-9]{9})$"/>
+    </group>
+    <group>
+        <char-property name="fax" label="Fax" example="0112456123" size="10" width="6" pattern="^([0][0-9]{9})$"/>
+        <varchar-property name="email" label="Email" example="user@sample.com" min-length="5" width="6" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
+    </group>
+    <group>
+        <text-property name="address" label="Address" example="123, Agunukolapalassa road, Agunukola" min-length="4" max-length="1000" required="yes" width="12"/>
+    </group>
+    <group>
+
+        <text-property name="description" label="Description" example="this is the description" max-length="5000" required="no" width="12"/>
+    </group>
+</regular-module>

@@ -1,0 +1,21 @@
+<div (mouseleave)="setFocus(false)">
+  <div *ngIf="fileDetails.length === 0" class="text-center my-4 mx-2" style="font-size: 90%"><i>{{placeholder}}</i></div>
+  <div *ngIf="fileDetails.length > 0" class="row file-details-container">
+    <div *ngFor="let fileDetail of fileDetails" class="col-md-6 col-lg-4">
+      <div class="file-detail-box" [title]="fileDetail.originalname">
+        <img *ngIf="fileDetail.id !== null" src="{{thumbnailUrl}}{{fileDetail.id}}"/>
+        <img *ngIf="fileDetail.id === null" src="assets/loading.gif"/>
+        <div>
+          <span>{{fileDetail.originalname}}</span>
+          <span class="font-italic">{{formatBytes(fileDetail.filesize)}}</span>
+          <span class="font-italic">{{fileDetail.filemimetype}}</span>
+        </div>
+        <button (focus)="setFocus(true)" (blur)="setFocus(false)" [disabled]="disabled" (click)="remove(fileDetail.id)" type="button" class="mat-btn-sm" mat-stroked-button><mat-icon>clear</mat-icon> Remove</button>
+      </div>
+    </div>
+  </div>
+  <div class="text-right">
+    <button (focus)="setFocus(true)" (blur)="setFocus(false)" [disabled]="disabled" (click)="removeAll()" type="button" class="mat-btn-sm" mat-stroked-button><mat-icon>clear</mat-icon> Remove All </button>
+    <button (focus)="setFocus(true)" (blur)="setFocus(false)" [disabled]="disabled" (click)="openFilesDialog()" color="accent" type="button" class="mat-btn-sm" mat-flat-button><mat-icon>file_upload</mat-icon> Choose </button>
+  </div>
+</div>

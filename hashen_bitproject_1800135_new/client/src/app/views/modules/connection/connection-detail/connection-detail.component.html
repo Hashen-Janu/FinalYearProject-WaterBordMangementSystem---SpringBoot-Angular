@@ -1,0 +1,135 @@
+<app-no-privilege *ngIf="!privilege.showOne" message="No privilege to show more details of a connection"></app-no-privilege>
+<app-object-not-found *ngIf="loaded && !connection" message="Connection Not Found"></app-object-not-found>
+<app-loading *ngIf="!loaded"></app-loading>
+<div *ngIf="connection && privilege.showOne">
+  <app-page-header
+    title="Connection Detail Page of {{ connection.code }}"
+    [breadcrumbSegments]="['Connections', 'Show All Connections', 'Details of ' + connection.code]"
+  ></app-page-header>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Created Date</th>
+                <td>{{connection.tocreation | date}}</td>
+              </tr>
+              <tr>
+                <th>Created Time</th>
+                <td>{{connection.tocreation | date: 'shortTime': '+0530'}}</td>
+              </tr>
+              <tr>
+                <th>Creator</th>
+                <td>{{getUserDisplayName(connection.creator)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Code</th>
+                <td>{{connection.code}}</td>
+              </tr>
+              <tr *ngIf="connection.consumer">
+                <th>Consumer name</th>
+                <td>{{connection.consumer.nametitle.name}} {{connection.consumer.firstname}}</td>
+              </tr>
+              <tr>
+                <th>Mobile Number</th>
+                <td>{{connection.mobile}}</td>
+              </tr>
+              <tr>
+                <th>Land Number</th>
+                <td>{{connection.land}}</td>
+              </tr>
+              <tr>
+                <th>Post box</th>
+                <td>{{connection.pobox}}</td>
+              </tr>
+              <tr>
+                <th>Street</th>
+                <td>{{connection.street}}</td>
+              </tr>
+              <tr>
+                <th>Gramaniladhari Division</th>
+                <td>{{connection.gramaniladharidiv.name}}</td>
+              </tr>
+              <tr>
+                <th>Village</th>
+                <td>{{connection.gramaniladharidiv.village.name}}</td>
+              </tr>
+              <tr>
+                <th>City</th>
+                <td>{{connection.gramaniladharidiv.village.city.name}}</td>
+              </tr>
+              <tr>
+                <th>Divisional Secretarial</th>
+                <td>{{connection.gramaniladharidiv.village.city.divsecretariat.name}}</td>
+              </tr>
+
+              <tr>
+                <th>Meter no</th>
+                <td>{{connection.meterno}}</td>
+              </tr>
+              <tr>
+                <th>Meter seal no</th>
+                <td>{{connection.meterseelno}}</td>
+              </tr>
+              <tr>
+                <th>Meter circular</th>
+                <td>{{connection.metercircular}}</td>
+              </tr>
+              <tr>
+                <th>Meter Size</th>
+                <td>{{connection.metersize}}</td>
+              </tr>
+              <tr>
+                <th>Water supply size</th>
+                <td>{{connection.watersupplysize}}</td>
+              </tr>
+              <tr>
+                <th>Initial meter reading</th>
+                <td>{{connection.initmeterreading}}</td>
+              </tr>
+              <tr>
+                <th>Supplied date</th>
+                <td>{{connection.supplieddate | date: 'fullDate'}}</td>
+              </tr>
+              <tr *ngIf="connection.placetype">
+                <th>Place Type</th>
+                <td>{{connection.placetype.name}}</td>
+              </tr>
+              <tr *ngIf="connection.ownershiptype">
+                <th>Owner ship Type</th>
+                <td>{{connection.ownershiptype.name}}</td>
+              </tr>
+              <tr>
+                <th>Connection status</th>
+                <td>{{connection.connectionstatus.name}}</td>
+              </tr>
+              <tr>
+                <th>Description</th>
+                <td>{{connection.description}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="d-flex mt-5">
+    <button *ngIf="privilege.delete" (click)="delete()" class="ml-0" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+    <span class="spacer"></span>
+    <button *ngIf="privilege.update" routerLink="/connections/edit/{{connection.id}}" mat-raised-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+    <button *ngIf="privilege.add" routerLink="/connections/add" mat-stroked-button><mat-icon>add</mat-icon> New Connection</button>
+    <button *ngIf="privilege.showAll" routerLink="/connections" class="mr-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Connections</button>
+  </div>
+</div>

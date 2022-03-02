@@ -1,0 +1,132 @@
+<app-no-privilege message="No privilege to add new vehicle" *ngIf="!privilege.add"></app-no-privilege>
+<div *ngIf="privilege.add">
+  <app-page-header title="Vehicle Form" [breadcrumbSegments]="['Vehicles', 'Add New Vehicle']"></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Vehicle number</mat-label>
+                <input matInput formControlName="no" required>
+                <mat-hint>Ex: Sp-ABB-0251</mat-hint>
+                <mat-error *ngIf="noField.invalid">
+                  <span *ngIf="noField.errors.required">Vehicle number is required</span>
+                  <span *ngIf="noField.errors.server">{{noField.errors.server.join(', ')}}</span>
+                  <span *ngIf="noField.errors.minlength">Vehicle number should has at least null characters. </span>
+                  <span *ngIf="noField.errors.maxlength">Vehicle number can have a maximum of 20 characters. </span>
+                  <span *ngIf="noField.errors.pattern">Vehicle number is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Vehicle Type</mat-label>
+                <mat-select formControlName="vehicletype" required>
+                  <mat-option *ngFor="let vehicletype of vehicletypes" [value]="vehicletype.id">{{vehicletype.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="vehicletypeField.invalid">
+                  <span *ngIf="vehicletypeField.errors.required">Select at lease one vehicle type</span>
+                  <span *ngIf="vehicletypeField.errors.server">{{vehicletypeField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Vahicle brand</mat-label>
+                <input matInput formControlName="brand" required>
+                <mat-hint>Ex: toyota</mat-hint>
+                <mat-error *ngIf="brandField.invalid">
+                  <span *ngIf="brandField.errors.required">Vahicle brand is required</span>
+                  <span *ngIf="brandField.errors.server">{{brandField.errors.server.join(', ')}}</span>
+                  <span *ngIf="brandField.errors.minlength">Vahicle brand should has at least 2 characters. </span>
+                  <span *ngIf="brandField.errors.maxlength">Vahicle brand can have a maximum of 255 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Vehicle Model</mat-label>
+                <input matInput formControlName="model" >
+                <mat-hint>Ex: Tow Cab</mat-hint>
+                <mat-error *ngIf="modelField.invalid">
+                  <span *ngIf="modelField.errors.server">{{modelField.errors.server.join(', ')}}</span>
+                  <span *ngIf="modelField.errors.minlength">Vehicle Model should has at least 2 characters. </span>
+                  <span *ngIf="modelField.errors.maxlength">Vehicle Model can have a maximum of 255 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Vehicle reg year</mat-label>
+                <input matInput formControlName="regyear" >
+                <mat-hint>Ex: 1996</mat-hint>
+                <mat-error *ngIf="regyearField.invalid">
+                  <span *ngIf="regyearField.errors.server">{{regyearField.errors.server.join(', ')}}</span>
+                  <span *ngIf="regyearField.errors.minlength">Vehicle reg year should has at least null characters. </span>
+                  <span *ngIf="regyearField.errors.maxlength">Vehicle reg year can have a maximum of 255 characters. </span>
+                  <span *ngIf="regyearField.errors.pattern">Vehicle reg year is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Unit</mat-label>
+                <mat-select formControlName="unit" required>
+                  <mat-option *ngFor="let unit of units" [value]="unit.id">{{unit.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="unitField.invalid">
+                  <span *ngIf="unitField.errors.required">Select at lease one designation</span>
+                  <span *ngIf="unitField.errors.server">{{unitField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Vehicle photo</mat-label>
+            <app-file-chooser placeholder="No choosed vehicle photos to show" [min]="0" [max]="1" [accept]="['image/*']" formControlName="photo"></app-file-chooser>
+            <mat-hint>Select any image/* file</mat-hint>
+            <mat-error *ngIf="photoField.invalid">
+              <span *ngIf="photoField.errors.server">{{photoField.errors.server.join(', ')}}</span>
+              <span *ngIf="photoField.errors.min">vehicle photo is required</span>
+              <span *ngIf="photoField.errors.max">Maximum allowed vehicle photo count is 1</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" ></textarea>
+                <mat-hint>Ex: this is the description</mat-hint>
+                <mat-error *ngIf="descriptionField.invalid">
+                  <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+                  <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+                  <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 5000 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/vehicles" class="ml-0" mat-flat-button color="primary"><mat-icon>list</mat-icon> All Vehicles</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="reset"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="right">
+        <span class="text-warning">*</span> Required Fields
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

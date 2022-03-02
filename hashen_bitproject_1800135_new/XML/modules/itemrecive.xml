@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="itemrecive" to-string-ts="itemrecive.code" to-string-java="itemreturn.getCode()">
+    <code length="10" prefix="IT" searchable="yes" exist-on-table="yes"/>
+    <group>
+        <reference-property  required="yes"  searchable="yes" width="6" exist-on-table="yes" name="iorder" label="Item order" referenced-from="iorder" service-method="getAllBasic" to-string-java="iorder.getCode()" to-string-ts="iorder.code"/>
+        <date-property name="date" label="Item recive date" example="01/05/2021" required="yes" exist-on-table="yes" width="6" />
+    </group>
+    <sub-module name="itemreciveitem" label="Received Items" to-string-ts="itemreciveitem.item.name" to-string-java="itemreciveitem.getItem().getName()">
+        <reference-property name="item" label="Item" to-string-java="item.getName()" to-string-ts="item.name" service-method="getAllBasic" referenced-from="item" searchable="yes" required="yes"/>
+        <decimal-property name="qty" label="Quantity" example="5" precision="13" scale="3" min="0" max="10000000" required="yes"/>
+    </sub-module>
+    <group>
+        <text-property name="description" label="Description" example="this is the description" max-length="5000" required="no" width="12"/>
+    </group>
+
+</regular-module>

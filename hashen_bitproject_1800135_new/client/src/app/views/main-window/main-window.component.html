@@ -1,0 +1,69 @@
+<div (window:resize)="setSidenavSettings()" id="main-window-wrapper" [ngClass]="{'dark':isDark, 'light': !isDark}">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="sidenavOpen=!sidenavOpen">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <img src="assets/logo.png" class="logo">
+    <span class="spacer">National Water Supply and Drainage Board - Agunukolapelassa</span>
+    <button (click)="setNotificationsAsRead()" mat-mini-fab color="primary" [matMenuTriggerFor]="menu">
+      <mat-icon [matBadgeHidden]="unreadNotificationCount == '0'" [matBadge]="unreadNotificationCount" matBadgeColor="warn">notifications</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" class="test">
+      <div (click)="$event.stopPropagation();" class="notification-item" *ngFor="let notification of latestNotifications">
+        <div class="msg">{{notification.message}}</div>
+        <div class="n-date">
+          <button [title]="notification.dosend | date :'medium'" mat-flat-button disabled>
+            <mat-icon>update</mat-icon>&#x00A0;<span>{{notification.dosend | date : 'MMM, dd'}}</span>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="latestNotifications.length!=0" mat-menu-item class="text-center">
+        <button routerLink="/users/my-all-notifications" mat-flat-button color="primary" class="btn-block m-0">See All</button>
+      </div>
+      <div *ngIf="latestNotifications.length==0" class="text-center px-3 pt-3 pb-1">
+        <i>No notifications to show</i>
+      </div>
+    </mat-menu>
+    <img src="{{loggedUserPhoto}}" class="user-image">
+
+    <span class="user-name d-none d-md-inline-block">{{loggedUserName}}</span>
+
+    <button mat-mini-fab color="primary" [matMenuTriggerFor]="settings">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <mat-menu #settings="matMenu">
+      <button (click)="logout()" mat-menu-item><mat-icon>logout</mat-icon> Sign Out</button>
+      <button routerLink="/users/change-my-password" mat-menu-item><mat-icon>vpn_key</mat-icon> Change My Password</button>
+      <button routerLink="/users/change-my-photo" mat-menu-item><mat-icon>photo</mat-icon> Change My Photo</button>
+      <button *ngIf="latestNotifications.length != 0" routerLink="users/my-all-notifications" mat-menu-item><mat-icon>notifications</mat-icon> My Notifications</button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav [(opened)]="sidenavOpen" [mode]="sidenaveMode">
+      <div class="user-box">
+        <img src="{{loggedUserPhoto}}" class="user-image">
+        <span class="user-name d-inline-block">{{loggedUserName}}</span>
+        <button (click)="logout()" color="accent" class="d-inline-block mat-btn-sm" mat-flat-button>
+          <mat-icon>logout</mat-icon>
+          <span class="d-inline-block ml-1">Sign Out</span>
+        </button>
+      </div>
+      <div style="padding-left:10px;padding-right: 10px; margin-bottom: 10px;">
+        <mat-slide-toggle labelPosition="before" [checked]="isDark" color="primary" class="mat-body-2" (change)="changeTheme($event)">Dark Mode</mat-slide-toggle>
+      </div>
+      <app-navigation heading="Main Navigation" *ngIf="this.usecasesLoaded" [linkItems]="linkItems"></app-navigation>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="py-2 px-3">
+        <router-outlet *ngIf="this.usecasesLoaded"></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <footer class="container-fluid d-flex">
+    <div class="d-inline-block">Copyright &copy; 2021 Water Board Agunukolapalassa. All rights reserved.</div>
+    <span class="spacer"></span>
+    <div class="d-inline-block">Version 1.0.0</div>
+  </footer>
+</div>

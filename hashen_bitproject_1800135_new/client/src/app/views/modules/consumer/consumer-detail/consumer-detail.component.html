@@ -1,0 +1,155 @@
+<app-no-privilege *ngIf="!privilege.showOne" message="No privilege to show more details of a consumer"></app-no-privilege>
+<app-object-not-found *ngIf="loaded && !consumer" message="Consumer Not Found"></app-object-not-found>
+<app-loading *ngIf="!loaded"></app-loading>
+<div *ngIf="consumer && privilege.showOne">
+  <app-page-header
+    title="Consumer Detail Page of {{ consumer.code + ' ' + consumer.firstname }}"
+    [breadcrumbSegments]="['Consumers', 'Show All Consumers', 'Details of ' + consumer.code + ' ' + consumer.firstname]"
+  ></app-page-header>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <mat-card-content style="min-height: 400px">
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+            <tr>
+              <th>Created Date</th>
+              <td>{{consumer.tocreation | date}}</td>
+            </tr>
+            <tr>
+              <th>Created Time</th>
+              <td>{{consumer.tocreation | date: 'shortTime': '+0530'}}</td>
+            </tr>
+            <tr>
+              <th>Creator</th>
+              <td>{{getUserDisplayName(consumer.creator)}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="example-card">
+        <mat-card-content>
+
+          <mat-tab-group>
+            <mat-tab label="Consumer">
+              <mat-card-content style="min-height: 330px">
+                <table class="w-100 table-striped custom-data-table">
+                  <tr>
+                    <th>Code</th>
+                    <td>{{consumer.code}}</td>
+                  </tr>
+                  <tr>
+                    <th>Type</th>
+                    <td>{{consumer.consumertype.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Company name</th>
+                    <td>{{consumer.companyname}}</td>
+                  </tr>
+                  <tr>
+                    <th>Company responsible officer designation</th>
+                    <td>{{consumer.designation}}</td>
+                  </tr>
+                  <tr>
+                    <th>Land deed no</th>
+                    <td>{{consumer.landdeedno}}</td>
+                  </tr>
+
+
+                  <tr>
+                    <th>Consumer Name</th>
+                    <td>{{consumer.nametitle.name}} {{consumer.firstname}} {{consumer.lastname}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>NIC Number</th>
+                    <td>{{consumer.nic}}</td>
+                  </tr>
+                  <tr>
+                    <th>Gender</th>
+                    <td>{{consumer.gender.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Primary contact</th>
+                    <td>{{consumer.contact1}}</td>
+                  </tr>
+                  <tr>
+                    <th>Alternate contact</th>
+                    <td>{{consumer.contact2}}</td>
+                  </tr>
+                  <tr>
+                    <th>Fax</th>
+                    <td>{{consumer.fax}}</td>
+                  </tr>
+                  <tr>
+                    <th>Email</th>
+                    <td>{{consumer.email}}</td>
+                  </tr>
+                  <tr>
+                    <th>Address</th>
+                    <td [innerHTML]="consumer.address | nl2br"></td>
+                  </tr>
+
+                  <tr>
+                    <th>Registerd date</th>
+                    <td>{{consumer.doregisterd}}</td>
+                  </tr>
+                  <tr>
+                    <th>Description</th>
+                    <td [innerHTML]="consumer.description | nl2br"></td>
+                  </tr>
+                </table>
+              </mat-card-content>
+            </mat-tab>
+
+            <mat-tab label="Land deed photo">
+              <mat-card-content >
+                <img mat-card-image src="{{landdeedphoto? landdeedphoto: '/assets/user.jpg'}}">
+              </mat-card-content>
+            </mat-tab>
+
+            <mat-tab label="Gramaniladhari critificate">
+              <mat-card-content >
+                <img mat-card-image src="{{grcphoto? grcphoto: '/assets/user.jpg'}}">
+              </mat-card-content>
+            </mat-tab>
+            <mat-tab label="Consumer connection details">
+              <mat-card-content>
+                <table class="w-100 table-striped custom-data-table">
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th>Consumer name</th>
+                      <th>Mobile Number</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let connection of connections">
+                      <td>{{connection.code}}</td>
+                      <td>{{connection.consumer.nametitle.name}} {{connection.consumer.firstname}}</td>
+                      <td>{{connection.mobile}}</td>
+                      <td>
+                        <button routerLink="/connections/{{connection.id}}" class="mat-btn-sm" mat-stroked-button><mat-icon>visibility</mat-icon> More ...</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </mat-card-content>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="d-flex mt-5">
+    <button *ngIf="privilege.delete" (click)="delete()" class="ml-0" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+    <span class="spacer"></span>
+    <button *ngIf="privilege.update" routerLink="/consumers/edit/{{consumer.id}}" mat-raised-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+    <button *ngIf="privilege.add" routerLink="/consumers/add" mat-stroked-button><mat-icon>add</mat-icon> New Consumer</button>
+    <button *ngIf="privilege.showAll" routerLink="/consumers" class="mr-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Consumers</button>
+  </div>
+</div>

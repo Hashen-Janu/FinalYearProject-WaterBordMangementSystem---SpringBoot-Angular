@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="connection" to-string-ts="connection.code" to-string-java="connection.getCode()">
+    <code length="10" prefix="CN" searchable="yes" exist-on-table="yes"/>
+
+    <group>
+        <reference-property basic="yes" width="4" name="consumer" label="Consumer name" to-string-java="consumer.getFirstname()" to-string-ts="consumer.firstname" service-method="getAllBasic" exist-on-table="yes" searchable="yes"
+                            referenced-from="consumer"/>
+        <char-property width="4" basic="yes" name="mobile" label="Mobile Number" unique="yes" example="0766123045" size="10"  required="yes" pattern="^[0][0-9]{9}$"/>
+        <char-property width="4" name="land" label="Land Number"  example="0766123045" size="10" pattern="^[0][0-9]{9}$"/>
+    </group>
+    <group>
+        <varchar-property name="pobox" label="Post box" example="059" required="yes" width="4" pattern="" min-length="4"/>
+        <varchar-property name="street" label="Street" example="Grmasanwrdhana road" required="yes" exist-on-table="yes" width="4"/>
+        <reference-property basic="yes" name="gramaniladharidiv" label="Gramaniladhari division" to-string-java="gramaniladharidiv.getName()" to-string-ts="gramaniladharidiv.name" service-method="getAll" exist-on-table="yes" searchable="yes" width="4"
+                            referenced-from="gramaniladharidiv"/>
+    </group>
+
+    <group>
+        <varchar-property name="meterno" label="Meter no" example="181112002" required="yes" width="3" pattern="" min-length="7" max-length="7" />
+        <varchar-property name="meterseelno" label="Meter seal no" example="585" required="yes" exist-on-table="yes" searchable="yes" width="3" min-length="3" max-length="3"/>
+        <varchar-property name="metercircular" label="Meter circular" example="15mm" required="yes" width="3" min-length="5"/>
+        <varchar-property name="metersize" label="Meter Size" example="15mm" required="yes" width="3" min-length="5"/>
+    </group>
+    <group>
+        <varchar-property name="watersupplysize" label="Water supply size" example="15mm"  width="4" min-length="5"/>
+        <varchar-property name="initmeterreading" label="Initial meter reading" example="181112002" min-length="8" max-length="8" required="yes" pattern="^(?=.*[1-9].*)[\d]{1,8}$" width="4" />
+        <date-property name="supplieddate" label="Supplied date" example="01/05/2021" required="yes" exist-on-table="yes"  width="4"/>
+
+    </group>
+    <group>
+        <reference-property name="placetype" label="Place Type" to-string-java="placetype.getName()" to-string-ts="placetype.name" service-method="getAll" exist-on-table="yes" searchable="yes" width="4"
+                            referenced-from="placetype"/>
+        <reference-property name="ownershiptype" label="Owner ship Type" to-string-java="ownershiptype.getName()" to-string-ts="ownershiptype.name" service-method="getAll"  width="4"
+                            referenced-from="ownershiptype"/>
+        <reference-property name="connectionstatus" label="Owner ship Type" to-string-java="connectionstatus.getName()" to-string-ts="connectionstatus.name" service-method="getAll"  width="4"
+                            referenced-from="connectionstatus" default-value="1" insertable="no" required="yes"/>
+
+    </group>
+
+    <group>
+        <varchar-property name="description" label="Description" example="....." max-length="5000" required="no" width="12"/>
+    </group>
+
+</regular-module>

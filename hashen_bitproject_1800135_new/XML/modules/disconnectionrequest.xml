@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="disconnectionrequest" to-string-ts="disconnectionrequest.code" to-string-java="disconnectionrequest.getCode()">
+    <code length="8" exist-on-table="yes" searchable="yes" prefix="DR"/>
+    <group>
+        <reference-property name="connection" label="Connection" to-string-java="connection.getConsumer().getName()"  basic="yes" to-string-ts="connection.consumer.name" width="6" service-method="getAllBasic"
+                            referenced-from="connection" searchable="yes" required="yes" exist-on-table="yes"/>
+        <date-property name="date" label="Disconnet request date" example="01/05/2021" required="yes" width="6" exist-on-table="yes"/>
+    </group>
+
+    <group>
+        <reference-property width="6" name="disconnectiontype" label="Disconnection type" to-string-java="disconnectiontype.getName()" to-string-ts="disconnectiontype.name" service-method="getAll"
+                                       referenced-from="disconnectiontype" required="yes"/>
+
+        <reference-property default-value="1" insertable="no" width="6" name="disconnectionrequeststatus" label="Disconnect request status" to-string-java="disconnectionrequeststatus.getName()" to-string-ts="disconnectionrequeststatus.name" service-method="getAll"
+                            referenced-from="disconnectionrequeststatus" required="yes"/>
+
+    </group>
+    <group>
+        <text-property name="description" label="Description" example="This is the description" max-length="5000" required="no" width="12"/>
+    </group>
+
+</regular-module>

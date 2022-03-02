@@ -1,0 +1,90 @@
+<app-no-privilege *ngIf="!privilege.update" message="No privilege to change iorder details"></app-no-privilege>
+<div *ngIf="this.iorder && privilege.update">
+  <app-page-header
+    title="Iorder Change Form of {{ iorder.code }}"
+    [breadcrumbSegments]="['Iorders', 'Show All Iorders', 'Change Details of ' + iorder.code]"
+  ></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Do requred</mat-label>
+                <input matInput [matDatepicker]="pickerdorequired" formControlName="dorequired" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerdorequired"></mat-datepicker-toggle>
+                <mat-datepicker #pickerdorequired></mat-datepicker>
+                <mat-hint>Ex: 01/05/2021</mat-hint>
+                <mat-error *ngIf="dorequiredField.invalid">
+                  <span *ngIf="dorequiredField.errors.required">Do requred is required</span>
+                  <span *ngIf="dorequiredField.errors.server">{{dorequiredField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="iorderstatus" required>
+                  <mat-option *ngFor="let iorderstatus of iorderstatuses" [value]="iorderstatus.id">{{iorderstatus.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="iorderstatusField.invalid">
+                  <span *ngIf="iorderstatusField.errors.required">Select at lease one status</span>
+                  <span *ngIf="iorderstatusField.errors.server">{{iorderstatusField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100" class="w-100" *ngIf= "iorderstatusField.value==2" >
+                <mat-label>Recived Date</mat-label>
+                <input matInput [matDatepicker]="pickerdorecived" formControlName="dorecived" [max]="getDate()" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerdorecived"></mat-datepicker-toggle>
+                <mat-datepicker #pickerdorecived></mat-datepicker>
+                <mat-hint>Ex: 01/05/2021</mat-hint>
+                <mat-error *ngIf="dorecivedField.invalid">
+                  <span *ngIf="dorecivedField.errors.required">Do recived is required</span>
+                  <span *ngIf="dorecivedField.errors.server">{{dorecivedField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <h3 class="mb-0 mat-subheading-1 font-weight-light">Order item</h3>
+          <app-orderitem-update-sub-form [min]="0" [max]="0" formControlName="orderitems"></app-orderitem-update-sub-form>
+          <div class="error-box" *ngIf="orderitemsField.invalid && !orderitemsField.pristine">
+            <p *ngIf="orderitemsField.errors.min">Should has at least 0 order item</p>
+            <p *ngIf="orderitemsField.errors.max">Maximum allowed only 0 Order item</p>
+                <span *ngIf="orderitemsField.errors.server">{{orderitemsField.errors.server.join(', ')}}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" ></textarea>
+                <mat-hint>Ex: this is the description</mat-hint>
+                <mat-error *ngIf="descriptionField.invalid">
+                  <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+                  <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+                  <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 5000 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/iorders" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Iorders</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="button" (click)="discardChanges()"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

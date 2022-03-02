@@ -1,0 +1,147 @@
+<app-no-privilege *ngIf="!privilege.showOne" message="No privilege to show more details of a taskallocation"></app-no-privilege>
+<app-object-not-found *ngIf="loaded && !taskallocation" message="Taskallocation Not Found"></app-object-not-found>
+<app-loading *ngIf="!loaded"></app-loading>
+<div *ngIf="taskallocation && privilege.showOne">
+  <app-page-header
+    title="Taskallocation Detail Page of {{ taskallocation.code }}"
+    [breadcrumbSegments]="['Taskallocations', 'Show All Taskallocations', 'Details of ' + taskallocation.code]"
+  ></app-page-header>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Created Date</th>
+                <td>{{taskallocation.tocreation | date}}</td>
+              </tr>
+              <tr>
+                <th>Created Time</th>
+                <td>{{taskallocation.tocreation | date: 'shortTime': '+0530'}}</td>
+              </tr>
+              <tr>
+                <th>Creator</th>
+                <td>{{getUserDisplayName(taskallocation.creator)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Code</th>
+                <td>{{taskallocation.code}}</td>
+              </tr>
+              <tr>
+                <th>Task allocation date</th>
+                <td>{{taskallocation.date | date: 'fullDate'}}</td>
+              </tr>
+              <tr>
+                <th>Task allocation time</th>
+                <td>{{'1970-01-01 ' + taskallocation.time | date: 'shortTime'}}</td>
+              </tr>
+              <tr>
+                <th>Task type</th>
+                <td>{{taskallocation.tasktype.name}}</td>
+              </tr>
+
+              <tr>
+                <th>Post box</th>
+                <td>{{taskallocation.pobox}}</td>
+              </tr>
+
+              <tr>
+                <th>Street</th>
+                <td>{{taskallocation.street}}</td>
+              </tr>
+
+              <tr>
+                <th>Gramaniladhari division</th>
+                <td>{{taskallocation.gramaniladharidiv.name}}</td>
+              </tr>
+//display in deatil
+              <tr>
+                <th>Title</th>
+                <td>{{taskallocation.title}}</td>
+              </tr>
+
+              <tr *ngIf="taskallocation.connectionrequest">
+                <th>Connection Request</th>
+                <td>{{taskallocation.connectionrequest.consumer.firstname}}</td>
+              </tr>
+
+              <tr *ngIf="taskallocation.disconnectionrequest">
+                <th>Disconnection request</th>
+                <td>{{taskallocation.disconnectionrequest.code}} - {{taskallocation.disconnectionrequest.connection.consumer.firstname}}</td>
+              </tr>
+
+              <tr *ngIf="taskallocation.reconnectionrequest">
+                <th>Reconnection request</th>
+                <td>{{taskallocation.reconnectionrequest.code}}  - {{taskallocation.disconnectionrequest.connection.consumer.firstname}}</td>
+              </tr>
+
+              <tr *ngIf="taskallocation.modificationrequest">
+                <th>Modification request</th>
+                <td>{{taskallocation.modificationrequest.code}}  - {{taskallocation.disconnectionrequest.connection.consumer.firstname}}</td>
+              </tr>
+
+              <tr *ngIf="taskallocation.complaint">
+                <th>Complaint</th>
+                <td>{{taskallocation.complaint.code}}- {{taskallocation.complaint.complainttype}}</td>
+              </tr>
+
+              <tr *ngIf="taskallocation.taskallocationstatus">
+                <th>Status</th>
+                <td>{{taskallocation.taskallocationstatus.name}}</td>
+              </tr>
+
+              <tr *ngIf="taskallocation.remarks">
+                <th>Remarks</th>
+                <td [innerHTML]="taskallocation.remarks | nl2br"></td>
+              </tr>
+                  <tr>
+                    <td colspan="2">
+                      <table class="w-100 custom-data-table">
+                        <thead>
+                          <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let taskallocationitem of taskallocation.taskallocationitemList">
+                            <td>{{taskallocationitem.item.name}}</td>
+                            <td>{{taskallocationitem.qty}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+              <tr>
+                <th>Vehicle</th>
+                <td><span class="mat-body badge badge-secondary d-inline-block mr-2 mb-2 font-weight-light py-1 px-3" *ngFor="let vehicle of taskallocation.vehicleList">{{vehicle.no}}</span></td>
+              </tr>
+              <tr>
+                <th>Employee</th>
+                <td><span class="mat-body badge badge-secondary d-inline-block mr-2 mb-2 font-weight-light py-1 px-3" *ngFor="let employee of taskallocation.employeeList">{{employee.callingname}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="d-flex mt-5">
+    <button *ngIf="privilege.delete" (click)="delete()" class="ml-0" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+    <span class="spacer"></span>
+    <button disabled *ngIf="privilege.update" routerLink="/taskallocations/edit/{{taskallocation.id}}" mat-raised-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+    <button *ngIf="privilege.add" routerLink="/taskallocations/add" mat-stroked-button><mat-icon>add</mat-icon> New Taskallocation</button>
+    <button *ngIf="privilege.showAll" routerLink="/taskallocations" class="mr-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Taskallocations</button>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="city" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="50"/>
+        <int-property name="divsecretariat_id" size="2"/>
+    </properties>
+    <values>
+        <value>
+            <data>Agunukolapalassa</data>
+            <data>1 </data>
+        </value>
+
+        <value>
+            <data>Hungama</data>
+            <data>1</data>
+        </value>
+        <value>
+            <data>Ranna</data>
+            <data>1</data>
+        </value>
+
+
+    </values>
+</seed>

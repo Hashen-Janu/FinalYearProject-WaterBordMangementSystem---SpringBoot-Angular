@@ -1,0 +1,33 @@
+<div id="login-page" [ngClass]="{'dark':isDark, 'light': !isDark}">
+  <div id="login-page-container">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-card>
+        <mat-card-content>
+          <div>
+            <h1>Sign In</h1>
+            <img src="assets/logo.png">
+          </div>
+
+          <mat-form-field class="hint-less-field" appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" formControlName="username">
+            <mat-error *ngIf="usernameField.invalid">Username is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="hint-less-field" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="passwordField.invalid">Password is required</mat-error>
+          </mat-form-field>
+
+          <mat-checkbox color="primary" formControlName="rememberMe">Remember me</mat-checkbox>
+
+          <div *ngIf="responseMsg!==null" id="response-msg" [innerHTML]="responseMsg | nl2br"></div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" id="btn-sign-in">Sign In</button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="disposal" to-string-ts="disposal.code" to-string-java="disposal.getCode()">
+    <code length="10" prefix="DS" searchable="yes" exist-on-table="yes"/>
+    <group>
+        <text-property name="reason" label="Reason" example="please reason" max-length="5000" required="yes" width="6"/>
+        <date-property name="date" label="Disposal date" example="01/05/2021" required="yes" exist-on-table="yes" width="6" />
+    </group>
+
+    <sub-module name="disposalitem" label="Return Item" to-string-ts="disposalitem.item.name" to-string-java="disposalitem.getItem().getName()">
+        <reference-property name="item" label="Item" to-string-java="item.getName()" to-string-ts="item.name" service-method="getAllBasic" referenced-from="item" searchable="yes" required="yes"/>
+        <int-property name="qty" label="Quantity" example="5" min="1" max="2000" exist-on-table="yes" required="yes" width="6"/>
+    </sub-module>
+</regular-module>

@@ -1,0 +1,90 @@
+<app-no-privilege *ngIf="!privilege.update" message="No privilege to change connectiontype details"></app-no-privilege>
+<div *ngIf="this.connectiontype && privilege.update">
+  <app-page-header
+    title="Connectiontype Change Form of {{ connectiontype.code + ' ' + connectiontype.name }}"
+    [breadcrumbSegments]="['Connectiontypes', 'Show All Connectiontypes', 'Change Details of ' + connectiontype.code + ' ' + connectiontype.name]"
+  ></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-8">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Connection type name</mat-label>
+                <input matInput formControlName="name" >
+                <mat-hint>Ex: Connection type name </mat-hint>
+                <mat-error *ngIf="nameField.invalid">
+                  <span *ngIf="nameField.errors.server">{{nameField.errors.server.join(', ')}}</span>
+                  <span *ngIf="nameField.errors.minlength">Connection type name should has at least null characters. </span>
+                  <span *ngIf="nameField.errors.maxlength">Connection type name can have a maximum of 255 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Fee</mat-label>
+                <input type="number" matInput formControlName="fee" required>
+                <mat-hint>Ex: Rs.100</mat-hint>
+                <mat-error *ngIf="feeField.invalid">
+                  <span *ngIf="feeField.errors.required">Fee is required</span>
+                  <span *ngIf="feeField.errors.server">{{feeField.errors.server.join(', ')}}</span>
+                  <span *ngIf="feeField.errors.minlength">Fee should be equal or greater than 0</span>
+                  <span *ngIf="feeField.errors.maxlength">Fee should be equal or less than 10000000</span>
+                  <span *ngIf="feeField.errors.pattern">Fee is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Security deposit</mat-label>
+                <input type="number" matInput formControlName="secdeposit" required (keyup)="totalCalculation()">
+                <mat-hint>Ex: Rs.100</mat-hint>
+                <mat-error *ngIf="secdepositField.invalid">
+                  <span *ngIf="secdepositField.errors.required">Security deposit is required</span>
+                  <span *ngIf="secdepositField.errors.server">{{secdepositField.errors.server.join(', ')}}</span>
+                  <span *ngIf="secdepositField.errors.minlength">Security deposit should be equal or greater than 0</span>
+                  <span *ngIf="secdepositField.errors.maxlength">Security deposit should be equal or less than 10000000</span>
+                  <span *ngIf="secdepositField.errors.pattern">Security deposit is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Non refundable deposit</mat-label>
+                <input type="number" matInput formControlName="nonrefdeposit" required (keyup)="totalCalculation()">
+                <mat-hint>Ex: Rs.100</mat-hint>
+                <mat-error *ngIf="nonrefdepositField.invalid">
+                  <span *ngIf="nonrefdepositField.errors.required">Non refundable deposit is required</span>
+                  <span *ngIf="nonrefdepositField.errors.server">{{nonrefdepositField.errors.server.join(', ')}}</span>
+                  <span *ngIf="nonrefdepositField.errors.minlength">Non refundable deposit should be equal or greater than 0</span>
+                  <span *ngIf="nonrefdepositField.errors.maxlength">Non refundable deposit should be equal or less than 10000000</span>
+                  <span *ngIf="nonrefdepositField.errors.pattern">Non refundable deposit is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <h3 class="mb-0 mat-subheading-1 font-weight-light">Connection Item</h3>
+          <app-connectionitem-update-sub-form [min]="0" [max]="0" formControlName="connectionitems" (ngModelChange)="totalCalculation()"></app-connectionitem-update-sub-form>
+          <div class="error-box" *ngIf="connectionitemsField.invalid && !connectionitemsField.pristine">
+            <p *ngIf="connectionitemsField.errors.min">Should has at least 0 connection item</p>
+            <p *ngIf="connectionitemsField.errors.max">Maximum allowed only 0 Connection Item</p>
+                <span *ngIf="connectionitemsField.errors.server">{{connectionitemsField.errors.server.join(', ')}}</span>
+          </div>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/connectiontypes" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Connectiontypes</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="button" (click)="discardChanges()"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

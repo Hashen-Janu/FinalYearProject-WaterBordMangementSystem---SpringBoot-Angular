@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="iorder" to-string-ts="iorder.code" to-string-java="iorder.getCode()">
+    <code length="10" prefix="IO" searchable="yes" exist-on-table="yes"/>
+    <group>
+        <date-property name="doordered" label="Do orderd date" example="01/05/2021" required="yes" width="6" exist-on-table="yes"/>
+        <date-property name="dorequired" label="Do requred" example="01/05/2021" required="yes" width="6" exist-on-table="yes"/>
+
+    </group>
+    <group>
+        <date-property name="dorecived" label="Do recived" example="01/05/2021" required="yes" width="6" />
+        <reference-property required="yes" default-value="1" insertable="no" searchable="yes" width="6" exist-on-table="yes" name="iorderstatus" label="Status" referenced-from="iorderstatus" service-method="getAll" to-string-java="iorderstatus.getName()" to-string-ts="iorderstatus.name"/>
+    </group>
+   <sub-module name="orderitem" label="Order item" to-string-ts="orderitem.item.name" to-string-java="orderitem.getItem().getName()">
+       <reference-property name="item" label="Item" to-string-java="item.getName()" to-string-ts="item.name" service-method="getAllBasic" referenced-from="item" searchable="yes" required="yes"/>
+       <int-property name="qty" label="Quantity" example="5" min="1" max="2000" exist-on-table="yes" required="yes" width="6"/>
+   </sub-module>
+    <group>
+        <text-property name="description" label="Description" example="this is the description" max-length="5000" required="no" width="12"/>
+    </group>
+    
+
+</regular-module>

@@ -1,0 +1,26 @@
+<h1 *ngIf="heading">{{heading}}</h1>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+  <mat-tree-node [routerLinkActiveOptions]="{exact: true}" [routerLink]="node.path" routerLinkActive="active-link" class="link-item" *matTreeNodeDef="let node" matTreeNodeToggle>
+    <li class="mat-tree-node">
+      <mat-icon>{{node.icon}}</mat-icon>
+      <span class="d-inline-block ml-1">{{node.title}}</span>
+    </li>
+  </mat-tree-node>
+  <mat-nested-tree-node matTreeNodeToggle *matTreeNodeDef="let node; when: hasChild">
+    <li>
+      <div class="mat-tree-node link-item">
+        <mat-icon>{{node.icon}}</mat-icon>
+        <span class="d-inline-block ml-1">{{node.title}}</span>
+        <div class="spacer"></div>
+        <button class="mr-1" mat-icon-button [attr.aria-label]="'Toggle ' + node.title">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+      </div>
+      <ul class="sub-nav" [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+        <ng-container matTreeNodeOutlet></ng-container>
+      </ul>
+    </li>
+  </mat-nested-tree-node>
+</mat-tree>

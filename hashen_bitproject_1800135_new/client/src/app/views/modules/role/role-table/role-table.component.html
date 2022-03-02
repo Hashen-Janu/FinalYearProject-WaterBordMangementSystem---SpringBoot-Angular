@@ -1,0 +1,74 @@
+<app-no-privilege *ngIf="!privilege.showAll" message="No privilege to show all roles"></app-no-privilege>
+<div *ngIf="privilege.showAll">
+  <app-page-header title="Roles" [breadcrumbSegments]="['Roles', 'Show All Roles']"></app-page-header>
+  <div *ngIf="roleDataPage!==undefined">
+    <mat-card>
+      <mat-card-content>
+        <div class="mb-2" *ngIf="privilege.add">
+          <button class="mx-0" routerLink="/roles/add" mat-stroked-button><mat-icon>add</mat-icon> New Role</button>
+        </div>
+        <div class="mb-1">
+          <div class="row">
+            <div class="col-md-6 col-lg-3">
+              <mat-form-field class="w-100 search-form-field" appearance="outline">
+                <mat-label>Filter by Name</mat-label>
+                <input matInput [formControl]="nameField" (keyup)="loadData()">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" *ngIf="roleDataPage.totalElements > 0">
+          <table mat-table [dataSource]="roleDataPage.content" class="w-100">
+
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="usercount">
+              <th mat-header-cell *matHeaderCellDef> User count </th>
+              <td mat-cell *matCellDef="let element"> {{element.activeUserCount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="more-col">
+              <th class="btn-col" mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="btn-col">
+                <button routerLink="/roles/{{element.id}}" class="mat-btn-sm" mat-stroked-button><mat-icon>visibility</mat-icon> More ...</button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete-col">
+              <th class="btn-col" mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="btn-col">
+                <button (click)="delete(element)" class="mat-btn-sm" mat-flat-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="update-col">
+              <th class="btn-col" mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="btn-col">
+                <button routerLink="/roles/edit/{{element.id}}" class="mat-btn-sm" mat-flat-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+        <app-empty-data-table message="No roles to show" *ngIf="roleDataPage.totalElements === 0"></app-empty-data-table>
+        <div class="mt-1">
+          <mat-paginator
+            [length]="roleDataPage.totalElements"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 25, 50, 100]"
+            (page)="paginate($event)"
+            [showFirstLastButtons]="true"
+          >
+          </mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="designation" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="50"/>
+    </properties>
+    <values>
+        <value><data>OIC</data></value>
+        <value><data>Clerk</data></value>
+        <value><data>Pipe pitter</data></value>
+    </values>
+</seed>

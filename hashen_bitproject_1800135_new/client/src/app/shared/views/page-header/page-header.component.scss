@@ -1,0 +1,20 @@
+header{
+
+  margin-bottom: 12px;
+
+  h1{
+    margin: 10px 0px 0px;
+    font-weight: 300;
+  }
+
+  .breadcrumb{
+    display: block;
+    width: 100%;
+    padding: 0px;
+    margin: 5px 0px;
+
+    .breadcrumb-item{
+      display: inline-block;
+    }
+  }
+}

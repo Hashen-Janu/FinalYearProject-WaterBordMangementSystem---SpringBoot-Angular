@@ -1,0 +1,240 @@
+<app-no-privilege *ngIf="!privilege.showOne" message="No privilege to show more details of a Connection Estimate item"
+                  xmlns="http://www.w3.org/1999/html"></app-no-privilege>
+<app-object-not-found *ngIf="loaded && !connectionrequest" message="Connection Estimate item Not Found"></app-object-not-found>
+<app-loading *ngIf="!loaded"></app-loading>
+<div *ngIf="connectionrequest && privilege.showOne">
+  <app-page-header
+    title="Connection request Detail Page of {{ this.connectionrequest.code }}"
+    [breadcrumbSegments]="['Connection Estimate', 'Show All Connection Estimate', 'Details of ' + this.connectionrequest.code]"
+  ></app-page-header>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <mat-card-content style="min-height: 400px">
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+            <tr>
+              <th>ID</th>
+              <td>{{connectionrequest.code}}</td>
+            </tr>
+            <tr>
+              <th>Created Time</th>
+              <td>{{connectionrequest.tocreation | date: 'shortTime': '+0530'}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="example-card">
+        <mat-card-content>
+
+          <mat-tab-group>
+            <mat-tab label="Connection request">
+              <mat-card-content style="min-height: 330px">
+                <table class="w-100 table-striped custom-data-table">
+                  <tr>
+                    <th>ID</th>
+                    <td>{{connectionrequest.code}}</td>
+                  </tr>
+                  <tr>
+                    <th>Consumer name</th>
+                    <td>{{connectionrequest.consumer.nametitle.name}} {{connectionrequest.consumer.firstname}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Contacts</th>
+                    <td>{{connectionrequest.mobile}}{{connectionrequest.land ? ', '+connectionrequest.land: ''}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Post Box</th>
+                    <td>{{connectionrequest.pobox}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Street</th>
+                    <td>{{connectionrequest.street}}</td>
+                  </tr>
+                  <tr>
+                    <th>Postal address</th>
+                    <td>{{connectionrequest.postaladdress}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Gramaniladhari Division</th>
+                    <td>{{connectionrequest.gramaniladharidiv.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Village</th>
+                    <td>{{connectionrequest.gramaniladharidiv.village.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>City</th>
+                    <td>{{connectionrequest.gramaniladharidiv.village.city.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Divisional Secretarial</th>
+                    <td>{{connectionrequest.gramaniladharidiv.village.city.divsecretariat.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Connection Fee</th>
+                    <td>{{connectionrequest.connectionfee}}</td>
+                  </tr>
+                  <tr>
+                    <th>Application Fee</th>
+                    <td>{{connectionrequest.appicationfee}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Vat</th>
+                    <td>{{connectionrequest.vat}}</td>
+                  </tr>
+                  <tr>
+                    <th>Labour cost</th>
+                    <td>{{connectionrequest.laborcost}}</td>
+                  </tr>
+                  <tr>
+                    <th>Place Type</th>
+                    <td>{{connectionrequest.placetype.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Ownership Type</th>
+                    <td>{{connectionrequest.ownershiptype.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Connection type</th>
+                    <td>{{connectionrequest.connectiontype.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Connection Request Status</th>
+                    <td>{{connectionrequest.connectionrequeststatus.name}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Connection Discount</th>
+
+                    <td>
+                      <table>
+                        <tr *ngFor="let dis of connectionrequest.discountList">{{dis.name}}</tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                </table>
+              </mat-card-content>
+            </mat-tab>
+
+            <mat-tab label="Pay slip photo">
+              <mat-card-content >
+
+                <img mat-card-image src="{{payslip? payslip: '/assets/user.jpg'}}" style="height: 500px">
+
+              </mat-card-content>
+
+            </mat-tab>
+
+            <mat-tab label="Items">
+              <mat-card-content >
+                <table class="w-100 table-striped custom-data-table">
+                  <tbody>
+                  <tr>
+                    <th>Quntity</th>
+                    <th>Item</th>
+                    <th>Unitprice</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                  <tr *ngFor="let connectionrequestitem of connectionrequest.connectionrequestitemList">
+                    <td>{{connectionrequestitem.qty}}</td>
+                    <td>{{connectionrequestitem.item.name}}</td>
+                    <td>{{connectionrequestitem.unitprice}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </mat-card-content>
+            </mat-tab>
+
+            <mat-tab label="Estimate" >
+              <mat-card-content id="yearWiseConnectionReport">
+                <table class="w-100 table-striped custom-data-table">
+
+                  <tr>
+                    <th>ID</th>
+                    <td>{{connectionrequest.code}}</td>
+                  </tr>
+                  <tr>
+                    <th>Consumer name</th>
+                    <td>{{connectionrequest.consumer.nametitle.name}} {{connectionrequest.consumer.firstname}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Contacts</th>
+                    <td>{{connectionrequest.mobile}}{{connectionrequest.land ? ', '+connectionrequest.land: ''}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Postal address</th>
+                    <td>{{connectionrequest.postaladdress}}</td>
+                  </tr>
+                  <tr>
+                    <th>Place Type</th>
+                    <td>{{connectionrequest.placetype.name}}</td>
+                  </tr>
+                  <tr>
+                    <th>Connection Fee</th>
+                    <td>{{connectionrequest.connectiontype.fee |currency :'Rs.'}}</td>
+                  </tr>
+                  <tr>
+                    <th>Application Fee</th>
+                    <td>{{connectionrequest.appicationfee  |currency :'Rs.'}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Vat</th>
+                    <td>{{connectionrequest.vat  |currency :'Rs.'}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Labour cost</th>
+                    <td>{{connectionrequest.laborcost |currency :'Rs.'}}</td>
+                  </tr>
+
+
+                  <tr>
+                    <th>Connection Discount</th>
+                    <td>
+                      <table>
+                        <tr *ngFor="let dis of connectionrequest.discountList">{{dis.name}} - {{dis.value  |currency :'Rs.'}}</tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th>Total</th>
+                    <td>{{total  |currency :'Rs.'}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Date</th>
+                    <td>{{connectionrequest.tocreation | date}}</td>
+                  </tr>
+
+                </table>
+              </mat-card-content>
+              <button (click)="print()">Print</button>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="d-flex mt-5">
+    <button *ngIf="privilege.delete" (click)="delete()" class="ml-0" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+    <span class="spacer"></span>
+    <button *ngIf="privilege.update" routerLink="/connectionrequests/edit/{{connectionrequest.id}}" mat-raised-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+    <button *ngIf="privilege.add" routerLink="/connectionrequests/add" mat-stroked-button><mat-icon>add</mat-icon> New Item connectionrequest</button>
+    <button *ngIf="privilege.showAll" routerLink="/connectionrequests" class="mr-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Connectionrequest item</button>
+  </div>
+</div>

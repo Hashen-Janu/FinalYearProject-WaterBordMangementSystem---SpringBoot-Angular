@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="vehicle" to-string-ts="vehicle.no" to-string-java="vehicle.getNo()">
+    <group>
+        <varchar-property basic="yes" name="no" label="Vehicle number" example="Sp-ABB-0251" required="yes" searchable="yes" exist-on-table="yes" width="6" max-length="20" pattern="^(sp|wp|sg|np|up|cp|ep|nw|nc)-([a-zA-Z]{2,3}|((?!0*-)[0-9]{1,3}))-[0-9]{4}(?!0{4})$)"/>
+        <reference-property basic="yes" name="vehicletype" label="Vehicle Type" to-string-java="vehicletype.getName()" to-string-ts="vehicletype.name" width="6" service-method="getAll" referenced-from="vehicletype" searchable="yes" required="yes"/>
+    </group>
+
+    <group>
+    <varchar-property name="brand" label="Vahicle brand" example="toyota" width="4" required="yes" min-length="2"/>
+    <varchar-property name="model" label="Vehicle Model" example="Tow Cab" width="4" exist-on-table="yes" searchable="yes" min-length="2"/>
+        <varchar-property name="regyear" label="Vehicle reg year" example="1996" width="4" pattern="^([1,2][0-9]{3})$"/>
+
+    </group>
+    <file-property exist-on-table="yes" name="photo" accept="image/*" label="Vehicle photo"/>
+    <group>
+        <text-property name="description" label="Description" example="this is the description" max-length="5000" required="no" width="12"/>
+    </group>
+
+</regular-module>

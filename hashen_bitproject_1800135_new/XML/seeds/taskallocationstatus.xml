@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="taskallocationstatus" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="25"/>
+    </properties>
+    <values>
+        <value><data>Pending</data></value>
+        <value><data>Done</data></value>
+        <value><data>Hold</data></value>
+    </values>
+</seed>

@@ -1,0 +1,86 @@
+<app-no-privilege *ngIf="!privilege.showOne" message="No privilege to show more details of a complaint"></app-no-privilege>
+<app-object-not-found *ngIf="loaded && !complaint" message="Complaint Not Found"></app-object-not-found>
+<app-loading *ngIf="!loaded"></app-loading>
+<div *ngIf="complaint && privilege.showOne">
+  <app-page-header
+    title="Complaint Detail Page of {{ complaint.code }}"
+    [breadcrumbSegments]="['Complaints', 'Show All Complaints', 'Details of ' + complaint.code]"
+  ></app-page-header>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Created Date</th>
+                <td>{{complaint.tocreation | date}}</td>
+              </tr>
+              <tr>
+                <th>Created Time</th>
+                <td>{{complaint.tocreation | date: 'shortTime': '+0530'}}</td>
+              </tr>
+              <tr>
+                <th>Creator</th>
+                <td>{{getUserDisplayName(complaint.creator)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Code</th>
+                <td>{{complaint.code}}</td>
+              </tr>
+              <tr>
+                <th>Connection</th>
+                <td>{{complaint.connection.consumer.firstname}}</td>
+              </tr>
+              <tr>
+                <th>Type</th>
+                <td>{{complaint.complainttype.name}}</td>
+              </tr>
+              <tr>
+                <th>Mobile Number</th>
+                <td>{{complaint.contact}}</td>
+              </tr>
+              <tr>
+                <th>Complaint date</th>
+                <td>{{complaint.date | date: 'fullDate'}}</td>
+              </tr>
+              <tr>
+                <th>Complaint Status</th>
+                <td>{{complaint.complaintstatus.name}}</td>
+              </tr>
+              <tr>
+                <th>Title</th>
+                <td [innerHTML]="complaint.title | nl2br"></td>
+              </tr>
+              <tr>
+                <th>Location</th>
+                <td [innerHTML]="complaint.location | nl2br"></td>
+              </tr>
+              <tr>
+                <th>Description</th>
+                <td [innerHTML]="complaint.description | nl2br"></td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="d-flex mt-5">
+    <button *ngIf="privilege.delete" (click)="delete()" class="ml-0" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+    <span class="spacer"></span>
+    <button *ngIf="privilege.update" routerLink="/complaints/edit/{{complaint.id}}" mat-raised-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+    <button *ngIf="privilege.add" routerLink="/complaints/add" mat-stroked-button><mat-icon>add</mat-icon> New Complaint</button>
+    <button *ngIf="privilege.showAll" routerLink="/complaints" class="mr-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Complaints</button>
+  </div>
+</div>

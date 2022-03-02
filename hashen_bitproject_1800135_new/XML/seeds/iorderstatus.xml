@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="iorderstatus" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="12"/>
+    </properties>
+    <values>
+        <value><data>Pending</data></value>
+        <value><data>Recived</data></value>
+    </values>
+</seed>

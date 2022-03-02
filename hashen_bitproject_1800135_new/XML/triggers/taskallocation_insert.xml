@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE trigger SYSTEM "./../dtd/trigger.dtd">
+<trigger name="taskallocation_insert" event="AFTER_INSERT" table="taskallocationitem">
+    update item set qty = qty - NEW.qty where id = NEW.item_id;
+</trigger>

@@ -1,0 +1,150 @@
+<app-no-privilege *ngIf="!privilege.update" message="No privilege to change complaint details"></app-no-privilege>
+<div *ngIf="this.complaint && privilege.update">
+  <app-page-header
+    title="Complaint Change Form of {{ complaint.code }}"
+    [breadcrumbSegments]="['Complaints', 'Show All Complaints', 'Change Details of ' + complaint.code]"
+  ></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100" >
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="complainttype" required>
+                  <mat-option *ngFor="let complainttype of complainttypes" [value]="complainttype.id">{{complainttype.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="complainttypeField.invalid">
+                  <span *ngIf="complainttypeField.errors.required">Select at lease one type</span>
+                  <span *ngIf="complainttypeField.errors.server">{{complainttypeField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100" *ngIf="this.complainttypeField.value==1">
+                <mat-label>Connection</mat-label>
+                <mat-select formControlName="connection" required (selectionChange)="setValues()">
+                  <mat-option *ngFor="let connection of connections" [value]="connection">{{connection.consumer.nametitle.name}} {{connection.consumer.firstname}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="connectionField.invalid">
+                  <span *ngIf="connectionField.errors.required">Select at lease one connection</span>
+                  <span *ngIf="connectionField.errors.server">{{connectionField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6" *ngIf="this.complainttypeField.value==2">
+              <mat-form-field appearance="outline" class="w-100" >
+                <mat-label>Complainer name</mat-label>
+                <input matInput formControlName="complainername" required>
+                <mat-hint>Ex: Police station, Hungama</mat-hint>
+                <mat-error *ngIf="complainernameField.invalid">
+                  <span *ngIf="complainernameField.errors.required">Complainer name is required</span>
+                  <span *ngIf="complainernameField.errors.server">{{complainernameField.errors.server.join(', ')}}</span>
+                  <span *ngIf="complainernameField.errors.minlength">Complainer name should has at least 10 characters. </span>
+                  <span *ngIf="complainernameField.errors.maxlength">Complainer name  can have a maximum of 12 characters. </span>
+                  <span *ngIf="complainernameField.errors.pattern">Complainer name is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Mobile Number</mat-label>
+                <input matInput formControlName="contact" required>
+                <mat-hint>Ex: 0766123045</mat-hint>
+                <mat-error *ngIf="contactField.invalid">
+                  <span *ngIf="contactField.errors.required">Mobile Number is required</span>
+                  <span *ngIf="contactField.errors.server">{{contactField.errors.server.join(', ')}}</span>
+                  <span *ngIf="contactField.errors.minlength">Mobile Number should has at least 9 characters. </span>
+                  <span *ngIf="contactField.errors.maxlength">Mobile Number can have a maximum of 10 characters. </span>
+                  <span *ngIf="contactField.errors.pattern">Mobile Number is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Complaint Status</mat-label>
+                <mat-select formControlName="complaintstatus" required>
+                  <mat-option *ngFor="let complaintstatus of complaintstatuses" [value]="complaintstatus.id">{{complaintstatus.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="complaintstatusField.invalid">
+                  <span *ngIf="complaintstatusField.errors.required">Select at lease one complaint status</span>
+                  <span *ngIf="complaintstatusField.errors.server">{{complaintstatusField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Title</mat-label>
+                <textarea matInput formControlName="title" required></textarea>
+                <mat-hint>Ex: ....</mat-hint>
+                <mat-error *ngIf="titleField.invalid">
+                  <span *ngIf="titleField.errors.required">Title is required</span>
+                  <span *ngIf="titleField.errors.server">{{titleField.errors.server.join(', ')}}</span>
+                  <span *ngIf="titleField.errors.minlength">Title should has at least null characters. </span>
+                  <span *ngIf="titleField.errors.maxlength">Title can have a maximum of 5000 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Location</mat-label>
+                <textarea matInput formControlName="location" required></textarea>
+                <mat-hint>Ex: kiula Junction</mat-hint>
+                <mat-error *ngIf="locationField.invalid">
+                  <span *ngIf="locationField.errors.required">Location is required</span>
+                  <span *ngIf="locationField.errors.server">{{locationField.errors.server.join(', ')}}</span>
+                  <span *ngIf="locationField.errors.minlength">Location should has at least null characters. </span>
+                  <span *ngIf="locationField.errors.maxlength">Location can have a maximum of 5000 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" ></textarea>
+                <mat-hint>Ex: this is the description</mat-hint>
+                <mat-error *ngIf="descriptionField.invalid">
+                  <span *ngIf="descriptionField.errors.server">{{descriptionField.errors.server.join(', ')}}</span>
+                  <span *ngIf="descriptionField.errors.minlength">Description should has at least null characters. </span>
+                  <span *ngIf="descriptionField.errors.maxlength">Description can have a maximum of 5000 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/complaints" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Complaints</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="button" (click)="discardChanges()"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

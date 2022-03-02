@@ -1,0 +1,301 @@
+<app-no-privilege message="No privilege to add new taskallocation" *ngIf="!privilege.add"></app-no-privilege>
+<div *ngIf="privilege.add">
+  <app-page-header title="Taskallocation Form" [breadcrumbSegments]="['Taskallocations', 'Add New Taskallocation']"></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-card>
+      <mat-card-content>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Task allocation date</mat-label>
+                <input matInput [matDatepicker]="pickerdate" formControlName="date" required [min]="setMin()">
+                <mat-datepicker-toggle matSuffix [for]="pickerdate"></mat-datepicker-toggle>
+                <mat-datepicker #pickerdate></mat-datepicker>
+                <mat-hint>Ex: 01/05/2021</mat-hint>
+                <mat-error *ngIf="dateField.invalid">
+                  <span *ngIf="dateField.errors.required">Task allocation date is required</span>
+                  <span *ngIf="dateField.errors.server">{{dateField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Task allocation time</mat-label>
+                <input type="time" matInput formControlName="time" required>
+                <mat-hint>Ex: Allocate Time 10.00AM</mat-hint>
+                <mat-error *ngIf="timeField.invalid">
+                  <span *ngIf="timeField.errors.required">Task allocation time is required</span>
+                  <span *ngIf="timeField.errors.server">{{timeField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Task Type</mat-label>
+                <mat-select (selectionChange)="loadData(); tasktypeField.disable()" formControlName="tasktype" required>
+                  <mat-option  (onSelectionChange)="validation()" *ngFor="let tasktype of tasktypes" [value]="tasktype.id">{{tasktype.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="tasktypeField.invalid">
+                  <span *ngIf="tasktypeField.errors.required">Select at lease one task type</span>
+                  <span *ngIf="tasktypeField.errors.server">{{tasktypeField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+
+            <div *ngIf="tasktypeField.value === 1" class="col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Connection Request</mat-label>
+                <mat-select formControlName="connectionrequest" required (selectionChange)="setConnectionValues()">
+                  <mat-option *ngFor="let connectionrequest of connectionrequests" [value]="connectionrequest">{{connectionrequest.consumer.code}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="connectionrequestField.invalid">
+                  <span *ngIf="connectionrequestField.errors.required">Select at lease one connection request</span>
+                  <span *ngIf="connectionrequestField.errors.server">{{connectionrequestField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+
+
+            <div class="col-md-3" *ngIf="tasktypeField.value === 4" >
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Disconnection Request</mat-label>
+                <mat-select formControlName="disconnectionrequest" required (selectionChange)="setDisconnecionValues()">
+                  <mat-option *ngFor="let disconnectionrequest of disconnectionrequests" [value]="disconnectionrequest">{{disconnectionrequest.code}} - {{disconnectionrequest.connection.consumer.firstname}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="disconnectionrequestField.invalid">
+                  <span *ngIf="disconnectionrequestField.errors.required">Select at lease one disconnection request</span>
+                  <span *ngIf="disconnectionrequestField.errors.server">{{disconnectionrequestField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+
+
+            <div class="col-md-3" *ngIf="tasktypeField.value === 5" >
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Reconnection Request</mat-label>
+                <mat-select formControlName="reconnectionrequest" required (selectionChange)="setReconnectioValues()">
+                  <mat-option *ngFor="let reconnectionrequest of reconnectionrequests" [value]="reconnectionrequest">{{reconnectionrequest.code}} - {{reconnectionrequest.connection.consumer.firstname}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="reconnectionrequestField.invalid">
+                  <span *ngIf="reconnectionrequestField.errors.required">Select at lease one reconnection request</span>
+                  <span *ngIf="reconnectionrequestField.errors.server">{{reconnectionrequestField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+
+
+            <div class="col-md-3" *ngIf="tasktypeField.value === 3" >
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Modification Request</mat-label>
+                <mat-select formControlName="modificationrequest" required (selectionChange)="setModificationConnectionValues()">
+                  <mat-option *ngFor="let modificationrequest of modificationrequests" [value]="modificationrequest">{{modificationrequest.code}} - {{modificationrequest.connection.consumer.firstname}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="modificationrequestField.invalid">
+                  <span *ngIf="modificationrequestField.errors.required">Select at lease one reconnection request</span>
+                  <span *ngIf="modificationrequestField.errors.server">{{modificationrequestField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+
+
+            <div class="col-md-3" *ngIf="tasktypeField.value === 2" >
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Complaint</mat-label>
+                <mat-select formControlName="complaint" required (selectionChange)="setComplainValues()">
+                  <mat-option (click)="setTitle(complaint)" *ngFor="let complaint of complaints" [value]="complaint">{{complaint.code}} - {{complaint.connection.consumer.firstname}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="complaintField.invalid">
+                  <span *ngIf="complaintField.errors.required">Select at lease one complaint</span>
+                  <span *ngIf="complaintField.errors.server">{{complaintField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+
+            <div class="col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Post box</mat-label>
+                <input matInput formControlName="pobox" required>
+                <mat-hint>Ex: 059</mat-hint>
+                <mat-error *ngIf="poboxField.invalid">
+                  <span *ngIf="poboxField.errors.required">Post box is required</span>
+                  <span *ngIf="poboxField.errors.server">{{poboxField.errors.server.join(', ')}}</span>
+                  <span *ngIf="poboxField.errors.minlength">Post box should has at least null characters. </span>
+                  <span *ngIf="poboxField.errors.maxlength">Post box can have a maximum of 255 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Street</mat-label>
+                <input matInput formControlName="street" required>
+                <mat-hint>Ex: Grmasanwrdhana road</mat-hint>
+                <mat-error *ngIf="streetField.invalid">
+                  <span *ngIf="streetField.errors.required">Street is required</span>
+                  <span *ngIf="streetField.errors.server">{{streetField.errors.server.join(', ')}}</span>
+                  <span *ngIf="streetField.errors.minlength">Street should has at least null characters. </span>
+                  <span *ngIf="streetField.errors.maxlength">Street can have a maximum of 255 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Gramaniladhari Division</mat-label>
+                <mat-select formControlName="gramaniladharidiv" >
+                  <mat-option *ngFor="let gramaniladharidiv of gramaniladharidivs" [value]="gramaniladharidiv.id">{{gramaniladharidiv.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="gramaniladharidivField.invalid">
+                  <span *ngIf="gramaniladharidivField.errors.server">{{gramaniladharidivField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        //add title field to form
+        //hide if not complainr request
+        <div *ngIf="complaintField.value" class="form-group">
+          <div class="row">
+            <div class="col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Title</mat-label>
+                <input matInput formControlName="title" required>
+                <mat-hint>Title</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+<!--            <div *ngIf="tasktypeField.value === 1" class="col-md-3">-->
+<!--              <mat-form-field appearance="outline" class="w-100">-->
+<!--                <mat-label>Connection Request</mat-label>-->
+<!--                <mat-select formControlName="connectionrequest" required>-->
+<!--                  <mat-option *ngFor="let connectionrequest of connectionrequests" [value]="connectionrequest.id">{{connectionrequest.consumer.code}}</mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="connectionrequestField.invalid">-->
+<!--                  <span *ngIf="connectionrequestField.errors.required">Select at lease one connection request</span>-->
+<!--                  <span *ngIf="connectionrequestField.errors.server">{{connectionrequestField.errors.server.join(', ')}}</span>-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+<!--            <div class="col-md-3" *ngIf="tasktypeField.value === 4" >-->
+<!--              <mat-form-field appearance="outline" class="w-100">-->
+<!--                <mat-label>Disconnection Request</mat-label>-->
+<!--                <mat-select formControlName="disconnectionrequest" required>-->
+<!--                  <mat-option *ngFor="let disconnectionrequest of disconnectionrequests" [value]="disconnectionrequest.id">{{disconnectionrequest.code}} - {{disconnectionrequest.connection.consumer.firstname}}</mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="disconnectionrequestField.invalid">-->
+<!--                  <span *ngIf="disconnectionrequestField.errors.required">Select at lease one disconnection request</span>-->
+<!--                  <span *ngIf="disconnectionrequestField.errors.server">{{disconnectionrequestField.errors.server.join(', ')}}</span>-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+<!--            <div class="col-md-3" *ngIf="tasktypeField.value === 5" >-->
+<!--              <mat-form-field appearance="outline" class="w-100">-->
+<!--                <mat-label>Reconnection Request</mat-label>-->
+<!--                <mat-select formControlName="reconnectionrequest" required>-->
+<!--                  <mat-option *ngFor="let reconnectionrequest of reconnectionrequests" [value]="reconnectionrequest.id">{{reconnectionrequest.code}} - {{reconnectionrequest.connection.consumer.firstname}}</mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="reconnectionrequestField.invalid">-->
+<!--                  <span *ngIf="reconnectionrequestField.errors.required">Select at lease one reconnection request</span>-->
+<!--                  <span *ngIf="reconnectionrequestField.errors.server">{{reconnectionrequestField.errors.server.join(', ')}}</span>-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+<!--            <div class="col-md-3" *ngIf="tasktypeField.value === 3" >-->
+<!--              <mat-form-field appearance="outline" class="w-100">-->
+<!--                <mat-label>Modification Request</mat-label>-->
+<!--                <mat-select formControlName="modificationrequest" required>-->
+<!--                  <mat-option *ngFor="let modificationrequest of modificationrequests" [value]="modificationrequest.id">{{modificationrequest.code}} - {{modificationrequest.connection.consumer.firstname}}</mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="modificationrequestField.invalid">-->
+<!--                  <span *ngIf="modificationrequestField.errors.required">Select at lease one reconnection request</span>-->
+<!--                  <span *ngIf="modificationrequestField.errors.server">{{modificationrequestField.errors.server.join(', ')}}</span>-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+<!--            <div class="col-md-3" *ngIf="tasktypeField.value === 2" >-->
+<!--              <mat-form-field appearance="outline" class="w-100">-->
+<!--                <mat-label>Complaint</mat-label>-->
+<!--                <mat-select formControlName="complaint" required>-->
+<!--                  <mat-option *ngFor="let complaint of complaints" [value]="complaint.id">{{complaint.code}} - {{complaint.connection.consumer.firstname}}</mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="complaintField.invalid">-->
+<!--                  <span *ngIf="complaintField.errors.required">Select at lease one complaint</span>-->
+<!--                  <span *ngIf="complaintField.errors.server">{{complaintField.errors.server.join(', ')}}</span>-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput formControlName="remarks" ></textarea>
+                <mat-hint>Ex: ....</mat-hint>
+                <mat-error *ngIf="remarksField.invalid">
+                  <span *ngIf="remarksField.errors.server">{{remarksField.errors.server.join(', ')}}</span>
+                  <span *ngIf="remarksField.errors.minlength">Remarks should has at least null characters. </span>
+                  <span *ngIf="remarksField.errors.maxlength">Remarks can have a maximum of 5000 characters. </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <h3 class="mb-0 mat-subheading-1 font-weight-light">Task allocation</h3>
+          <app-taskallocationitem-sub-form [min]="0" [max]="0" formControlName="taskallocationitems"></app-taskallocationitem-sub-form>
+          <div class="error-box" *ngIf="taskallocationitemsField.invalid && !taskallocationitemsField.pristine">
+            <p *ngIf="taskallocationitemsField.errors.min">Should has at least 0 task allocation</p>
+            <p *ngIf="taskallocationitemsField.errors.max">Maximum allowed only 0 Task allocation</p>
+                <span *ngIf="taskallocationitemsField.errors.server">{{taskallocationitemsField.errors.server.join(', ')}}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Vehicle</mat-label>
+            <app-dual-listbox [getToString]="getVehicleToString" [min]="1" [max]="3" placeholder="Add Vehicle To Here" [sourceData]="vehicles" formControlName="vehicles"></app-dual-listbox>
+            <mat-error *ngIf="vehiclesField.invalid">
+              <span *ngIf="vehiclesField.errors.min">Select at lease 1 Vehicle</span>
+              <span *ngIf="vehiclesField.errors.max">Select at most 3 Vehicle</span>
+              <span *ngIf="vehiclesField.errors.server">{{vehiclesField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Employee</mat-label>
+            <app-dual-listbox [getToString]="getEmployeesToString" [min]="1" [max]="10" placeholder="Add Employee To Here" [sourceData]="employees" formControlName="employees"></app-dual-listbox>
+            <mat-error *ngIf="employeesField.invalid">
+              <span *ngIf="employeesField.errors.min">Select at lease 1 Employee</span>
+              <span *ngIf="employeesField.errors.max">Select at most 10 Employee</span>
+              <span *ngIf="employeesField.errors.server">{{employeesField.errors.server.join(', ')}}</span>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/taskallocations" class="ml-0" mat-flat-button color="primary"><mat-icon>list</mat-icon> All Taskallocations</button>
+          <span class="spacer"></span>
+          <button (click)="tasktypeField.enable()" mat-stroked-button type="reset"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="right">
+        <span class="text-warning">*</span> Required Fields
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

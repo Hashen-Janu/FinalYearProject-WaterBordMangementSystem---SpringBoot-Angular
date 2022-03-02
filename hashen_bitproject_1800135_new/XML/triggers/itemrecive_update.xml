@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE trigger SYSTEM "./../dtd/trigger.dtd">
+<trigger name="itemrecive_update" event="AFTER_UPDATE" table="itemrecive">
+    DECLARE deference int(4) DEFAULT 0;
+
+    IF OLD.qty != NEW.qty THEN
+        SET deference = NEW.qty - OLD.qty;
+        update item set qty = qty + deference where id = NEW.item_id;
+    END IF;
+
+</trigger>

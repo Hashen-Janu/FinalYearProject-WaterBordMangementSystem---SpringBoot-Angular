@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="item" to-string-ts="item.code + ' ' + item.name" to-string-java="item.getCode() + #quat;-#quat; + item.getName()">
+    <code length="10" prefix="IT" searchable="yes" exist-on-table="yes"/>
+    <group>
+        <varchar-property basic="yes" exist-on-table="yes"  width="8" name="name" label="Item name" example="Shocket" required="yes" searchable="yes" />
+        <decimal-property name="price" label="Price" example="Rs.100" width="4" precision="10" scale="2" min="0" max="10000000" exist-on-table="yes" required="yes"/>
+    </group>
+    <group>
+      <int-property name="qty" label="Quantity" example="5" min="1" max="2000" exist-on-table="yes" required="yes" width="6"/>
+      <int-property name="rop" label="Reorder point" example="10"  min="0" max="2000" exist-on-table="yes" required="yes" width="6" />
+    </group>
+    <file-property exist-on-table="yes" name="photo"  accept="image/*" label="Item photo"/>
+    <group>
+        <text-property name="description" label="Description" example="this is the description" max-length="5000" required="no" width="12"/>
+    </group>
+
+</regular-module>

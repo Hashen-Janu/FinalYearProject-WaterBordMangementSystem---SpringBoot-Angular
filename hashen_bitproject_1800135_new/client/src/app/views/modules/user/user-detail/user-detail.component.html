@@ -1,0 +1,74 @@
+<app-no-privilege *ngIf="!privilege.showOne" message="No privilege to show more details of a user"></app-no-privilege>
+<app-object-not-found *ngIf="loaded && !user" message="User Not Found"></app-object-not-found>
+<app-loading *ngIf="!loaded"></app-loading>
+<div *ngIf="user && privilege.showOne">
+  <app-page-header
+    title="User Detail Page of {{ this.user.username }}"
+    [breadcrumbSegments]="['Users', 'Show All Users', 'Details of ' + this.user.username]"
+  ></app-page-header>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <img mat-card-image src="{{photo ? photo: './assets/user.jpg'}}">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Created Date</th>
+                <td>{{user.tocreation | date}}</td>
+              </tr>
+              <tr>
+                <th>Created Time</th>
+                <td>{{user.tocreation | date: 'shortTime': '+0530'}}</td>
+              </tr>
+              <tr>
+                <th>Creator</th>
+                <td>{{creator}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Type</th>
+                <td>{{user.employee ? 'Employee' : 'Administrator'}}</td>
+              </tr>
+              <tr>
+                <th>Username</th>
+                <td>{{user.username}}</td>
+              </tr>
+              <tr>
+                <th>Display Name</th>
+                <td>{{displayName}}</td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td>{{user.status}}</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div class="mat-subheading-1">Following roles are granted to the &#x201C;&#x00A0;<i>{{displayName}}</i>&#x00A0;&#x201D;.</div>
+                  <span class="mat-body badge badge-secondary d-inline-block mr-2 mb-2 font-weight-light py-1 px-3" *ngFor="let role of user.roleList">{{role.name}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="d-flex mt-5">
+    <button *ngIf="privilege.delete" (click)="delete()" class="ml-0" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+    <span class="spacer"></span>
+    <button *ngIf="canResetPassword" (click)="resetPassword()" type="button" mat-raised-button color="accent">Reset Password</button>
+    <button *ngIf="privilege.update" routerLink="/users/edit/{{user.id}}" mat-raised-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+    <button *ngIf="privilege.add" routerLink="/users/add" mat-stroked-button><mat-icon>add</mat-icon> New User</button>
+    <button *ngIf="privilege.showAll" routerLink="/users" class="mr-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Users</button>
+  </div>
+</div>

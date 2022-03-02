@@ -1,0 +1,59 @@
+<app-no-privilege *ngIf="!privilege.update" message="No privilege to change user details"></app-no-privilege>
+<div *ngIf="this.user && privilege.update">
+  <app-page-header
+    title="User Change Form of {{ displayName }}"
+    [breadcrumbSegments]="['Users', 'Show All Users', 'Change Details of ' + displayName]"
+  ></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Photo</mat-label>
+            <app-file-chooser placeholder="No choosed photos to show" [min]="0" [max]="1" [accept]="['image/*']" [maxFileSize]="6*1024*1024" formControlName="photo"></app-file-chooser>
+            <mat-hint>Select any &#x201C;JPG&#x201D; or &#x201C;PNG&#x201D; image file</mat-hint>
+            <mat-error *ngIf="photoField.invalid">
+              <span *ngIf="photoField.errors.max">Maximum allowed photo count is 1</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group mt-4 pt-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Roles</mat-label>
+            <mat-select formControlName="roles" required multiple>
+              <mat-option *ngFor="let role of roles" [value]="role.id">
+                {{role.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="rolesField.invalid">
+              <span *ngIf="rolesField.errors.required">Select at lease one role</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group mt-4 pt-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status" required>
+              <mat-option value="Active">Active</mat-option>
+              <mat-option value="Locked" disabled>Locked</mat-option>
+              <mat-option value="Deactivated">Deactivated</mat-option>
+            </mat-select>
+            <mat-error *ngIf="statusField.invalid">
+              <span *ngIf="statusField.errors.required">Status is required</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/users" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Users</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="button" (click)="discardChanges()"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

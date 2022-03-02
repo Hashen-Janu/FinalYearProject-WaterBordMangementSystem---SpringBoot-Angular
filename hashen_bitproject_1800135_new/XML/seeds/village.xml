@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="village" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="50"/>
+        <int-property name="city_id" size="11"/>
+    </properties>
+    <values>
+        <value>
+            <data>Hadunkatiya</data>
+            <data>1 </data>
+        </value>
+
+        <value>
+            <data>Kanukatiya</data>
+            <data>1</data>
+        </value>
+        <value>
+            <data>Bataatha</data>
+            <data>2</data>
+        </value>
+
+    </values>
+</seed>

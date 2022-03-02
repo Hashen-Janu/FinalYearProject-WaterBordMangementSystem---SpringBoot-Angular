@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="reconnectionrequest" to-string-ts="reconnectionrequest.code" to-string-java="reconnectionrequest.getCode()">
+    <code length="8" exist-on-table="yes" searchable="yes" prefix="RR"/>
+    <group>
+        <reference-property name="connection" label="Connection" to-string-java="connection.getConsumer().getName()"  basic="yes" to-string-ts="connection.consumer.name" width="4" service-method="getAllBasic"
+                            referenced-from="connection" searchable="yes" required="yes"/>
+        <date-property name="date" label="Disconnect request date" example="01/05/2021" required="yes" width="4" exist-on-table="yes"/>
+        <reference-property required="yes" default-value="1" insertable="no" searchable="yes" width="4" exist-on-table="yes" name="reconnectionrequeststatus" label="Reconnection Status" referenced-from="reconnectionrequeststatus" service-method="getAll" to-string-java="reconnectionrequeststatus.getName()" to-string-ts="reconnectionrequeststatus.name"/>
+
+    </group>
+    <group>
+        <text-property name="description" label="Description" example="this is the description" max-length="5000" required="no" width="12"/>
+    </group>
+
+</regular-module>

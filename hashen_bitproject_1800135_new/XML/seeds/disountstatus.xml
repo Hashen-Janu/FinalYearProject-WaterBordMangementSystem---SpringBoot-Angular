@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="discountstatus" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="12"/>
+    </properties>
+    <values>
+        <value><data>Active</data></value>
+        <value><data>Deactivate</data></value>
+
+    </values>
+</seed>

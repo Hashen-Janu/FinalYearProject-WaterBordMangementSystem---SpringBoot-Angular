@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="gramaniladharidiv" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="50"/>
+        <int-property name="village_id" size="2"/>
+    </properties>
+    <values>
+        <value>
+            <data>Kiula Uthura</data>
+            <data>1 </data>
+        </value>
+
+        <value>
+            <data>Kiula Dakuna</data>
+            <data>1</data>
+        </value>
+        <value>
+            <data>Bataatha Dakuna</data>
+            <data>3</data>
+        </value>
+        <value>
+            <data>Bataatha Uthura</data>
+            <data>3</data>
+        </value>
+
+        <value>
+            <data>Kanukatya Dakuna</data>
+            <data>2</data>
+        </value>
+
+        <value>
+            <data>Kanukatya Uthura</data>
+            <data>2</data>
+        </value>
+
+
+    </values>
+</seed>

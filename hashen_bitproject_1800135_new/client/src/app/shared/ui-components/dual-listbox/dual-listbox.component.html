@@ -1,0 +1,52 @@
+<div cdkTrapFocus  (mouseleave)="setFocus(false)" (click)="setFocus(true)" [formGroup]="form" class="row dual-listbox" >
+  <div class="col-5">
+    <div>
+      <input (focus)="setFocus(true)" (blur)="setFocus(false)" [attr.disabled]="disabled" formControlName="sourceSearch" placeholder="Filter from available options"/>
+    </div>
+    <div>
+      <select (focus)="setFocus(true)" (blur)="setFocus(false)"  [attr.disabled]="disabled" formControlName="source" multiple class="source-list">
+        <option [class.d-none]="!matchFromSource(v)" (dblclick)="addToSelectedList(getId(v))" *ngFor="let v of sourceData" [value]="getId(v)">{{getToString(v)}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-2 p-0">
+    <div class="dual-listbox-btn-group">
+      <div class="mt-5 text-center">
+        <button (focus)="setFocus(true)" (blur)="setFocus(false)" [disabled]="disabled" (click)="addAllToSelected()" class="w-50 m-0" type="button" mat-stroked-button>
+          <mat-icon>list</mat-icon>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+      <div class="mt-3 text-center">
+        <button (focus)="setFocus(true)" (blur)="setFocus(false)" [disabled]="disabled" (click)="addManyToSelectedList()" class="w-50 m-0" type="button" mat-stroked-button>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+      <div class="mt-3 text-center">
+        <button (focus)="setFocus(true)" (blur)="setFocus(false)" [disabled]="disabled" (click)="addManyToSourceList()" class="w-50 m-0" type="button" mat-stroked-button>
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+      </div>
+      <div class="mt-3 text-center">
+        <button (focus)="setFocus(true)" (blur)="setFocus(false)" [disabled]="disabled" (click)="addAllToSource()" class="w-50 m-0" type="button" mat-stroked-button>
+          <mat-icon>chevron_left</mat-icon>
+          <mat-icon>list</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-5">
+    <div>
+      <input (focus)="setFocus(true)" (blur)="setFocus(false)" formControlName="selectedSearch" [attr.disabled]="_value.length == 0 || disabled" placeholder="Filter from selected options"/>
+    </div>
+    <div>
+      <div *ngIf="_value.length == 0" class="dual-listbox-placeholder">{{placeholder}}</div>
+      <select (focus)="setFocus(true)" (blur)="setFocus(false)" [attr.disabled]="disabled" formControlName="selected" multiple *ngIf="_value.length > 0">
+        <option [class.d-none]="!matchFromSelected(v)" (dblclick)="addToSourceList(getId(v))" *ngFor="let v of _value" [value]="getId(v)">{{getToString(v)}}</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,40 @@
+#admin-configuration-page{
+  width: 100%;
+  height: 100%;
+  padding: 35px 15px 15px;
+
+  h1{
+    text-align: center;
+    border-bottom: 1px solid #019986;
+    padding-bottom: 10px;
+    margin: auto auto 10px;
+  }
+
+  img{
+    display: block;
+    max-width: 170px;
+    margin: 15px auto;
+  }
+
+  mat-card{
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+  }
+
+  mat-card-title {
+    margin: 5px -16px;
+  }
+
+  mat-card-footer {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  #btn-register{
+    width: 100%;
+    margin: 0px 0px 16px;
+  }
+
+}
+

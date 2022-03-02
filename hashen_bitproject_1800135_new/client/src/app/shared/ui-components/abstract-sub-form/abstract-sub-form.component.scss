@@ -1,0 +1,48 @@
+.sub-form{
+  background-color: rgba(170,170,170,0.1);
+  margin-bottom: 15px;
+  border-radius: 5px;
+  padding: 15px;
+  border: 1px solid rgba(150,150,150,0.4);
+}
+
+.sub-form-table-container{
+  background-color: rgba(170,170,170,0.1);
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid rgba(150,150,150,0.4);
+  overflow: auto;
+
+  .sub-form-table-placeholder{
+    text-align: center;
+    font-style: italic;
+    font-size: 90%;
+  }
+
+  .mat-table{
+    tbody{
+      >tr{
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        >td{
+          padding-top: 3px !important;
+          padding-bottom: 3px !important;
+        }
+      }
+
+      >tr:nth-child(odd){
+        background-color: rgba(170,170,170,0.3);
+      }
+    }
+    >thead{
+      >tr{
+        >th{
+          padding-top: 6px !important;
+          padding-bottom: 6px !important;
+        }
+      }
+    }
+
+  }
+
+}

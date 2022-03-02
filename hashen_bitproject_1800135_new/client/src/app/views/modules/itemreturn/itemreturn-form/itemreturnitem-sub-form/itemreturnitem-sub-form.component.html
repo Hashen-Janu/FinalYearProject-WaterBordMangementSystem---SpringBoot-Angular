@@ -1,0 +1,68 @@
+<div class="sub-form">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="sub-form-table-container" style="height: 240px;">
+        <div *ngIf="dataList.length === 0" class="sub-form-table-placeholder" style="padding-top: 90px">No return itemses to show</div>
+        <div *ngIf="dataList.length > 0" >
+
+          <table class="w-100 mat-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let dataItem of dataList; let i = index">
+              <td>{{dataItem.item.name}}</td>
+              <td>{{dataItem.qty | currency :'Rs.'}}</td>
+              <td class="btn-col">
+                <button [disabled]="disabled" type="button" (click)="removeData(i, dataItem)" class="mat-btn-sm" mat-flat-button color="warn">
+                  <mat-icon>delete</mat-icon> Delete
+                </button>
+              </td>
+              <td class="btn-col">
+                <button [disabled]="disabled" type="button" (click)="updateData(i, dataItem)" class="mat-btn-sm" mat-flat-button color="accent">
+                  <mat-icon>edit</mat-icon> Change
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <form [formGroup]="form" (ngSubmit)="addData()">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Item</mat-label>
+          <mat-select (click)="setValidations()" formControlName="item" [required]="hasValidations">
+            <mat-option *ngFor="let item of items" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="itemField.invalid">
+            <span *ngIf="itemField.errors.required">Select at lease one item</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Quantity</mat-label>
+          <input (focus)="setValidations()" type="number" matInput formControlName="qty" [required]="hasValidations">
+          <mat-hint>Ex: 5</mat-hint>
+          <mat-error *ngIf="qtyField.invalid">
+            <span *ngIf="qtyField.errors.required">Quantity is required</span>
+            <span *ngIf="qtyField.errors.min">Quantity should be equal or greater than 0. </span>
+            <span *ngIf="qtyField.errors.max">Quantity should be equal or less than 10000000. </span>
+            <span *ngIf="qtyField.errors.pattern">Quantity is invalid.</span>
+          </mat-error>
+        </mat-form-field>
+        <div class="text-right mt-5 d-flex">
+          <span class="spacer"></span>
+          <button [disabled]="disabled" (click)="resetForm()" class="mat-btn-sm" mat-stroked-button type="button"><mat-icon>refresh</mat-icon> Clear </button>
+          <button [disabled]="disabled" (click)="setValidations()" class="mr-0 mat-btn-sm" mat-flat-button color="accent" type="submit"><mat-icon>save</mat-icon> ADD </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

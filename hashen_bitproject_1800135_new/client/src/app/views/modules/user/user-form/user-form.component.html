@@ -1,0 +1,98 @@
+<app-no-privilege message="No privilege to add new user" *ngIf="!privilege.add"></app-no-privilege>
+<div *ngIf="privilege.add">
+  <app-page-header title="User Form" [breadcrumbSegments]="['Users', 'Add New User']"></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-card>
+      <mat-card-content>
+
+        <div class="form-group">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Employee</mat-label>
+              <mat-select formControlName="employee" required>
+                <mat-option *ngFor="let employee of employees" [value]="employee.id">
+                  {{employee.code + '-' + employee.nametitle.name + ' ' + employee.callingname}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeField.invalid">
+                <span *ngIf="employeeField.errors.required">Employee is required</span>
+                <span *ngIf="employeeField.errors.server">{{employeeField.errors.server.join(', ')}}</span>
+              </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-5">
+              <mat-form-field appearance="outline" class="w-100 mb-3">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="passwordHide ? 'password' : 'text'" formControlName="password" required>
+                <button type="button" mat-icon-button matSuffix (click)="passwordHide = !passwordHide">
+                  <mat-icon>{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-hint>Enter a strong password. Ex:&#x00A0;P@ssw0rd</mat-hint>
+                <mat-error *ngIf="passwordField.invalid">
+                  <span *ngIf="passwordField.errors.required">Password is required</span>
+                  <span *ngIf="passwordField.errors.minlength">Password should has minimum 8 characters</span>
+                  <span *ngIf="passwordField.errors.maxlength">Password should not exceed 25 characters</span>
+                  <span *ngIf="passwordField.errors.strongPassword">Password should be strong</span>
+                  <span *ngIf="passwordField.errors.server">{{passwordField.errors.server.join(', ')}}</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field appearance="outline" class="w-100 mb-3">
+                <mat-label>Password Confirm</mat-label>
+                <input matInput [type]="passwordConfirmHide ? 'password' : 'text'" formControlName="passwordConfirm" required>
+                <button type="button" mat-icon-button matSuffix (click)="passwordConfirmHide = !passwordConfirmHide">
+                  <mat-icon>{{passwordConfirmHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-hint>Re Enter above password</mat-hint>
+                <mat-error *ngIf="passwordConfirmField.invalid">
+                  <span *ngIf="passwordConfirmField.errors.required">Password confirm is required</span>
+                  <span *ngIf="passwordConfirmField.errors.mustMatch">Password not matched</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-2 text-right" style="padding-top: 10px">
+              <button (click)="generatePassword()" class="m-0" mat-stroked-button type="button"><mat-icon>vpn_key</mat-icon> Generate</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Photo</mat-label>
+            <app-file-chooser placeholder="No choosed photos to show" [min]="0" [max]="1" [accept]="['image/*']" [maxFileSize]="6*1024*1024" formControlName="photo"></app-file-chooser>
+            <mat-hint>Select any &#x201C;JPG&#x201D; or &#x201C;PNG&#x201D; image file</mat-hint>
+            <mat-error *ngIf="photoField.invalid">
+              <span *ngIf="photoField.errors.max">Maximum allowed photo count is 1</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group mt-4 pt-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Roles</mat-label>
+            <mat-select formControlName="roles" required multiple>
+              <mat-option *ngFor="let role of roles" [value]="role.id">
+                {{role.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="rolesField.invalid">
+              <span *ngIf="rolesField.errors.required">Select at lease one role</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/users" class="ml-0" mat-flat-button color="primary"><mat-icon>list</mat-icon> All Users</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="reset"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="right">
+        <span class="text-warning">*</span> Required Fields
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

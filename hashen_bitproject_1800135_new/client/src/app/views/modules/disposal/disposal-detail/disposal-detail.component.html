@@ -1,0 +1,80 @@
+<app-no-privilege *ngIf="!privilege.showOne" message="No privilege to show more details of a disposal"></app-no-privilege>
+<app-object-not-found *ngIf="loaded && !disposal" message="Disposal Not Found"></app-object-not-found>
+<app-loading *ngIf="!loaded"></app-loading>
+<div *ngIf="disposal && privilege.showOne">
+  <app-page-header
+    title="Disposal Detail Page of {{ disposal.code }}"
+    [breadcrumbSegments]="['Disposals', 'Show All Disposals', 'Details of ' + disposal.code]"
+  ></app-page-header>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Created Date</th>
+                <td>{{disposal.tocreation | date}}</td>
+              </tr>
+              <tr>
+                <th>Created Time</th>
+                <td>{{disposal.tocreation | date: 'shortTime': '+0530'}}</td>
+              </tr>
+              <tr>
+                <th>Creator</th>
+                <td>{{getUserDisplayName(disposal.creator)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table class="w-100 table-striped custom-data-table">
+            <tbody>
+              <tr>
+                <th>Code</th>
+                <td>{{disposal.code}}</td>
+              </tr>
+              <tr>
+                <th>Reason</th>
+                <td [innerHTML]="disposal.reason | nl2br"></td>
+              </tr>
+              <tr>
+                <th>Disposal date</th>
+                <td>{{disposal.date | date: 'fullDate'}}</td>
+              </tr>
+                  <tr>
+                    <td colspan="2">
+                      <table class="w-100 custom-data-table">
+                        <thead>
+                          <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let disposalitem of disposal.disposalitemList">
+                            <td>{{disposalitem.item.name}}</td>
+                            <td>{{disposalitem.qty}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="d-flex mt-5">
+    <button *ngIf="privilege.delete" (click)="delete()" class="ml-0" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+    <span class="spacer"></span>
+    <button *ngIf="privilege.update" routerLink="/disposals/edit/{{disposal.id}}" mat-raised-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+    <button *ngIf="privilege.add" routerLink="/disposals/add" mat-stroked-button><mat-icon>add</mat-icon> New Disposal</button>
+    <button *ngIf="privilege.showAll" routerLink="/disposals" class="mr-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Disposals</button>
+  </div>
+</div>

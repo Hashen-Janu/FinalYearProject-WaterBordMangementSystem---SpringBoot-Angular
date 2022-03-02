@@ -1,0 +1,113 @@
+<app-no-privilege *ngIf="!privilege.showAll" message="No privilege to show all users"></app-no-privilege>
+<div *ngIf="privilege.showAll">
+  <app-page-header title="Users" [breadcrumbSegments]="['Users', 'Show All Users']"></app-page-header>
+  <div *ngIf="userDataPage!==undefined">
+    <mat-card>
+      <mat-card-content>
+        <div class="mb-2" *ngIf="privilege.add">
+          <button class="mx-0" routerLink="/users/add" mat-stroked-button><mat-icon>add</mat-icon> New User</button>
+        </div>
+        <div class="mb-1">
+          <div class="row">
+
+            <div class="col-md-6 col-lg-3">
+              <mat-form-field class="w-100 search-form-field" appearance="outline">
+                <mat-label>Filter by Username</mat-label>
+                <input matInput [formControl]="usernameField" (keyup)="loadData()">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+              <mat-form-field class="w-100 search-form-field" appearance="outline">
+                <mat-label>Filter by Display name</mat-label>
+                <input matInput [formControl]="displayNameField" (keyup)="loadData()">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+              <mat-form-field class="w-100 search-form-field" appearance="outline">
+                <mat-label>Filter by Status</mat-label>
+                <mat-select [formControl]="statusField" (ngModelChange)="loadData()">
+                  <mat-option [value]="null" selected >Any Status</mat-option>
+                  <mat-option value="Active">Active</mat-option>
+                  <mat-option value="Locked">Locked</mat-option>
+                  <mat-option value="Deactivated">Deactivated</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" *ngIf="userDataPage.totalElements > 0">
+          <table mat-table [dataSource]="userDataPage.content" class="w-100">
+
+            <ng-container matColumnDef="photo">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element">
+                <img *ngIf="!element.photo" class="row-thumbnail" src="assets/user.jpg">
+                <img *ngIf="element.photo" class="row-thumbnail" src="{{thumbnailURL}}{{element.photo}}">
+              </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="username">
+              <th mat-header-cell *matHeaderCellDef> Username </th>
+              <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="displayname">
+              <th mat-header-cell *matHeaderCellDef> Display Name </th>
+              <td mat-cell *matCellDef="let element"> {{getDisplayName(element)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="reset-col">
+              <th class="btn-col" mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="btn-col">
+                <button (click)="resetPassword(element)" color="accent" type="button" class="mat-btn-sm" mat-flat-button>Reset Password</button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="more-col">
+              <th class="btn-col" mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="btn-col">
+                <button routerLink="/users/{{element.id}}" class="mat-btn-sm" mat-stroked-button><mat-icon>visibility</mat-icon> More ...</button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete-col">
+              <th class="btn-col" mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="btn-col">
+                <button (click)="delete(element)" class="mat-btn-sm" mat-flat-button color="warn"><mat-icon>delete</mat-icon> Delete</button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="update-col">
+              <th class="btn-col" mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="btn-col">
+                <button routerLink="/users/edit/{{element.id}}" class="mat-btn-sm" mat-flat-button color="accent"><mat-icon>edit</mat-icon> Change</button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+        <app-empty-data-table message="No users to show" *ngIf="userDataPage.totalElements === 0"></app-empty-data-table>
+        <div class="mt-1">
+          <mat-paginator
+            [length]="userDataPage.totalElements"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 25, 50, 100]"
+            (page)="paginate($event)"
+            [showFirstLastButtons]="true"
+          >
+          </mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

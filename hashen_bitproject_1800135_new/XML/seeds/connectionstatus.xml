@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="connectionstatus" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="25"/>
+    </properties>
+    <values>
+        <value><data>Connected</data></value>
+        <value><data>Temporary Disconnected</data></value>
+        <value><data>Disconnected</data></value>
+    </values>
+</seed>

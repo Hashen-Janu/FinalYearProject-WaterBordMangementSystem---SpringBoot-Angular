@@ -1,0 +1,96 @@
+<!ELEMENT primitive-module (char-property|varchar-property|text-property|int-property|decimal-property|boolean-property|reference-property|date-property|datetime-property|time-property)+>
+
+<!ELEMENT char-property EMPTY>
+<!ELEMENT varchar-property EMPTY>
+<!ELEMENT text-property EMPTY>
+<!ELEMENT int-property EMPTY>
+<!ELEMENT decimal-property EMPTY>
+<!ELEMENT boolean-property EMPTY>
+<!ELEMENT reference-property EMPTY>
+<!ELEMENT date-property EMPTY>
+<!ELEMENT datetime-property EMPTY>
+<!ELEMENT time-property EMPTY>
+
+<!ATTLIST primitive-module name CDATA #REQUIRED>
+<!ATTLIST primitive-module label CDATA "">
+<!ATTLIST primitive-module to-string CDATA #REQUIRED>
+
+<!ATTLIST char-property name CDATA #REQUIRED>
+<!ATTLIST char-property label CDATA #REQUIRED>
+<!ATTLIST char-property example CDATA #REQUIRED>
+<!ATTLIST char-property size CDATA #REQUIRED>
+<!ATTLIST char-property required (yes|no) "no">
+<!ATTLIST char-property unique (yes|no) "no">
+<!ATTLIST char-property pattern CDATA "">
+
+<!ATTLIST varchar-property name CDATA #REQUIRED>
+<!ATTLIST varchar-property label CDATA #REQUIRED>
+<!ATTLIST varchar-property example CDATA #REQUIRED>
+<!ATTLIST varchar-property min-length CDATA "0">
+<!ATTLIST varchar-property max-length CDATA "255">
+<!ATTLIST varchar-property required (yes|no) "no">
+<!ATTLIST varchar-property unique (yes|no) "no">
+<!ATTLIST varchar-property pattern CDATA "">
+
+<!ATTLIST text-property name CDATA #REQUIRED>
+<!ATTLIST text-property label CDATA #REQUIRED>
+<!ATTLIST text-property example CDATA #REQUIRED>
+<!ATTLIST text-property min-length CDATA "0">
+<!ATTLIST text-property max-length CDATA "65535">
+<!ATTLIST text-property required (yes|no) "no">
+<!ATTLIST text-property pattern CDATA "">
+
+<!ATTLIST int-property name CDATA #REQUIRED>
+<!ATTLIST int-property label CDATA #REQUIRED>
+<!ATTLIST int-property example CDATA #REQUIRED>
+<!ATTLIST int-property size CDATA "11">
+<!ATTLIST int-property min CDATA "-2147483648">
+<!ATTLIST int-property max CDATA "2147483647">
+<!ATTLIST int-property required (yes|no) "no">
+<!ATTLIST int-property unique (yes|no) "no">
+
+<!ATTLIST decimal-property name CDATA #REQUIRED>
+<!ATTLIST decimal-property label CDATA #REQUIRED>
+<!ATTLIST decimal-property example CDATA #REQUIRED>
+<!ATTLIST decimal-property scale CDATA #REQUIRED>
+<!ATTLIST decimal-property precision CDATA #REQUIRED>
+<!ATTLIST decimal-property min (-max|CDATA) "-max">
+<!ATTLIST decimal-property max (max|CDATA) "max">
+<!ATTLIST decimal-property required (yes|no) "no">
+<!ATTLIST decimal-property unique (yes|no) "no">
+
+<!ATTLIST boolean-property name CDATA #REQUIRED>
+<!ATTLIST boolean-property label CDATA #REQUIRED>
+<!ATTLIST boolean-property required (yes|no) "no">
+
+<!ATTLIST reference-property name CDATA #REQUIRED>
+<!ATTLIST reference-property label CDATA #REQUIRED>
+<!ATTLIST reference-property required (yes|no) "no">
+<!ATTLIST reference-property unique (yes|no) "no">
+<!ATTLIST reference-property referenced-from CDATA #REQUIRED>
+<!ATTLIST reference-property form-controller (mat-select|search-select|switches|radio) "mat-select">
+
+<!ATTLIST date-property name CDATA #REQUIRED>
+<!ATTLIST date-property label CDATA #REQUIRED>
+<!ATTLIST date-property example CDATA #REQUIRED>
+<!ATTLIST date-property min CDATA "">
+<!ATTLIST date-property max CDATA "">
+<!ATTLIST date-property required (yes|no) "no">
+<!ATTLIST date-property unique (yes|no) "no">
+
+<!ATTLIST datetime-property name CDATA #REQUIRED>
+<!ATTLIST datetime-property label CDATA #REQUIRED>
+<!ATTLIST datetime-property example CDATA #REQUIRED>
+<!ATTLIST datetime-property min CDATA "">
+<!ATTLIST datetime-property max CDATA "">
+<!ATTLIST datetime-property required (yes|no) "no">
+<!ATTLIST datetime-property unique (yes|no) "no">
+
+<!ATTLIST time-property name CDATA #REQUIRED>
+<!ATTLIST time-property label CDATA #REQUIRED>
+<!ATTLIST time-property example CDATA #REQUIRED>
+<!ATTLIST time-property min CDATA "">
+<!ATTLIST time-property max CDATA "">
+<!ATTLIST time-property required (yes|no) "no">
+<!ATTLIST time-property unique (yes|no) "no">
+

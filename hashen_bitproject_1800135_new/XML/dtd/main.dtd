@@ -1,0 +1,15 @@
+<!ELEMENT main (database, client, usertypes)>
+<!ELEMENT database (name, user, password, host)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT user (#PCDATA)>
+<!ELEMENT password (#PCDATA)>
+<!ELEMENT host (#PCDATA)>
+<!ELEMENT client (organization)>
+<!ELEMENT organization (#PCDATA)>
+<!ELEMENT usertypes (usertype+)>
+<!ELEMENT usertype EMPTY>
+<!ATTLIST usertype module-name CDATA #REQUIRED>
+<!ATTLIST usertype basic-properties CDATA #REQUIRED>
+<!ATTLIST usertype non-basic-properties CDATA #REQUIRED>
+<!ATTLIST usertype to-string-java CDATA #REQUIRED>
+<!ATTLIST usertype to-string-ts CDATA #REQUIRED>

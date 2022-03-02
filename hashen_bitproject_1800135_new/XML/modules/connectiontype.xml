@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="connectiontype" to-string-ts="connectiontype.code + ' ' + connectiontype.name" to-string-java="connectiontype.getCode() + #quat;-#quat; + connectiontype.getName()">
+    <code length="10" prefix="CT" searchable="yes" exist-on-table="yes"/>
+    <group>
+        <varchar-property basic="yes" exist-on-table="yes"  width="8" name="name" label="Connection type name" example="Connection type name "/>
+        <decimal-property name="fee" label="Fee" example="Rs.100" precision="10" scale="2" min="0" max="10000000" exist-on-table="yes" required="yes" width="4"/>
+
+    </group>
+    <group>
+      <decimal-property name="secdeposit" label="Security deposit" example="Rs.100" precision="10" scale="2" min="0" max="10000000" exist-on-table="yes" required="yes" width="6"/>
+      <decimal-property name="nonrefdeposit" label="Non refundable deposit" example="Rs.100" precision="10" scale="2" min="0" max="10000000" exist-on-table="yes" required="yes" width="6"/>
+    </group>
+    <sub-module name="connectionitem" label="Connection Item" to-string-ts="connectionitem.item.name" to-string-java="connectionitem.getItem().getName()">
+        <reference-property name="item" label="Item" to-string-java="item.getName()" to-string-ts="item.name" service-method="getAllBasic" searchable="yes" referenced-from="item" required="yes"/>
+        <int-property name="qty" label="Quantity" example="5" min="1" max="2000" exist-on-table="yes" required="yes" width="6"/>
+    </sub-module>
+
+</regular-module>

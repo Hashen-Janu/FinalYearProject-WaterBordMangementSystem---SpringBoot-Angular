@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE regular-module SYSTEM "./../dtd/regular-module.dtd">
+<regular-module name="employee" to-string-ts="employee.code + '-' + employee.nametitle.name + ' ' + employee.callingname" to-string-java="employee.getCode() + #quat;-#quat; + employee.getNametitle.getName() + #quat; #quat; + employee.getCallingname()">
+    <code length="8" prefix="EM" searchable="yes" exist-on-table="yes"/>
+    <group>
+        <reference-property basic="yes" required="yes" width="4" name="nametitle" label="Title" referenced-from="nametitle" service-method="getAll" to-string-java="nametitle.getName()" to-string-ts="nametitle.name"/>
+        <varchar-property basic="yes" exist-on-table="yes" searchable="yes" required="yes" width="8" name="callingname" label="Calling Name" example="Niroshan Mendis"/>
+        <varchar-property width="8" required="yes" name="fullname" label="Full Name" example="Niroshan Mendis"/>
+    </group>
+
+    <group>
+        <date-property required="yes" width="4" name="dobirth" label="Date Of Birth" example="1994-12-31"/>
+        <reference-property required="yes" width="4" name="gender" label="Gender" referenced-from="gender" service-method="getAll" to-string-java="gender.getName()" to-string-ts="gender.name"/>
+        <varchar-property required="yes" unique="yes" exist-on-table="yes" searchable="yes" width="4" name="nic" label="NIC Number" example="940081009V" min-length="10" max-length="12" pattern="^(([0-9]{12})|([0-9]{9}[vVxX]))$"/>
+    </group>
+    <file-property basic="yes" exist-on-table="yes" name="photo" label="Photo" accept="image/*"/>
+    <group>
+        <varchar-property width="4" name="mobile" label="Mobile Number" unique="yes" example="0766123045" max-length="10" min-length="9" required="yes" pattern="^[0][0-9]{9}$"/>
+        <varchar-property width="4" name="land" label="Land Number" example="0112789456" max-length="10" min-length="9" pattern="^[0][0-9]{9}$"/>
+        <varchar-property width="4" name="email" unique="yes" label="Email Address" example="user@gmail.com" min-length="5" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
+    </group>
+    <text-property name="address" label="Address" example="020, Hungama Road, Agunukolapallassa" min-length="4" required="yes"/>
+    <group>
+        <reference-property width="6" required="yes" name="designation" label="Designation" referenced-from="designation" exist-on-table="yes" service-method="getAll" to-string-ts="designation.name" to-string-java="designation.getName()"/>
+        <date-property width="6" name="dorecruit" required="yes" label="Date Of Recruit" example="2000-12-31"/>
+    </group>
+    <reference-property required="yes" default-value="1" insertable="no" searchable="yes" exist-on-table="yes" name="employeestatus" label="Status" referenced-from="employeestatus" service-method="getAll" to-string-java="employeestatus.getName()" to-string-ts="employeestatus.name"/>
+    <text-property name="description" label="Description" max-length="5000" example="this is the description"/>
+
+</regular-module>
+
+

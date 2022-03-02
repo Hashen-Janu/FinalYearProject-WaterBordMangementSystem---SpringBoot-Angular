@@ -1,0 +1,29 @@
+<!ELEMENT seed (properties, values)>
+<!ELEMENT properties (char-property|varchar-property|text-property|int-property|decimal-property|boolean-property|date-property|datetime-property|time-property)+>
+<!ELEMENT values (value+)>
+<!ELEMENT value (data+)>
+<!ELEMENT data (#PCDATA)>
+
+<!ELEMENT char-property EMPTY>
+<!ELEMENT varchar-property EMPTY>
+<!ELEMENT text-property EMPTY>
+<!ELEMENT int-property EMPTY>
+<!ELEMENT decimal-property EMPTY>
+<!ELEMENT boolean-property EMPTY>
+<!ELEMENT date-property EMPTY>
+<!ELEMENT datetime-property EMPTY>
+<!ELEMENT time-property EMPTY>
+
+<!ENTITY % props 'name CDATA #REQUIRED size CDATA #REQUIRED'>
+<!ATTLIST char-property %props;>
+<!ATTLIST varchar-property %props;>
+<!ATTLIST text-property name CDATA #REQUIRED>
+<!ATTLIST int-property name CDATA #REQUIRED size (1|2|3|4|5|6|7|8|9|10|11) #REQUIRED>
+<!ATTLIST boolean-property name CDATA #REQUIRED>
+<!ATTLIST date-property name CDATA #REQUIRED>
+<!ATTLIST time-property name CDATA #REQUIRED>
+<!ATTLIST datetime-property name CDATA #REQUIRED>
+<!ATTLIST decimal-property name CDATA #REQUIRED precision  CDATA #REQUIRED scale CDATA #REQUIRED>
+
+<!ATTLIST seed name CDATA #REQUIRED>
+<!ATTLIST seed to-string CDATA #REQUIRED>

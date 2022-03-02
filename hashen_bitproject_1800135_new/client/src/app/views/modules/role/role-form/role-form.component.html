@@ -1,0 +1,50 @@
+<app-no-privilege message="No privilege to add a new role" *ngIf="!privilege.add"></app-no-privilege>
+<div *ngIf="privilege.add">
+  <app-page-header title="Role Form" [breadcrumbSegments]="['Roles', 'Add a New Role']"></app-page-header>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-card>
+      <mat-card-content>
+
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-hint>Ex: Manager</mat-hint>
+            <mat-error *ngIf="nameField.invalid">
+              <span *ngIf="nameField.errors.required">Name is required</span>
+              <span *ngIf="nameField.errors.exists">Name already exists</span>
+              <span *ngIf="nameField.errors.minlength">Name should has at lease {{nameField.errors.minlength.requiredLength}} characters </span>
+              <span *ngIf="nameField.errors.maxlength">Name length should not exceed {{nameField.errors.maxlength.requiredLength}} characters </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div [class.module-box-container-error]="usecaseField.touched && usecaseField.invalid" class="module-box-container mt-5">
+          <div class="module-box mt-2 mb-1" *ngFor="let systemmodule of systemmodules">
+            <h2 class="m-0 mat-subheading-2">{{systemmodule.name}} Management</h2>
+            <hr class="mt-0 mb-1"/>
+            <p class="mat-subheading-1 font-weight-light text-muted">These are the activities related to {{systemmodule.name | lowercase}} management.</p>
+            <div class="module-box-table mx-3">
+              <div class="row py-2" *ngFor="let usecase of systemmodule.usecaseList">
+                <div class="col-lg-6 col-xl-4 col-md-6 col-9 pt-1">
+                  <span class="d-inline-block pl-md-3 mat-body">Is able to {{usecase.task | lowercase}}?</span>
+                </div>
+                <div class="col">
+                  <mat-slide-toggle (change)="onUsecaseChange($event, usecase.id)" color="primary"></mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="usecaseField.touched && usecaseField.invalid" class="error-message mt-1 ml-2 mat-body"><small>Required at least one activity</small></div>
+
+        <div class="text-right mt-5 d-flex">
+          <button *ngIf="privilege.showAll" routerLink="/roles" class="ml-0" mat-raised-button color="primary"><mat-icon>list</mat-icon> All Roles</button>
+          <span class="spacer"></span>
+          <button mat-stroked-button type="reset"><mat-icon>refresh</mat-icon> Clear</button>
+          <button class="mr-0" mat-flat-button color="primary" type="submit"><mat-icon>save</mat-icon> Save</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

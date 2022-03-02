@@ -1,0 +1,230 @@
+<!ELEMENT regular-module (code?,(char-property|varchar-property|text-property|int-property|decimal-property|file-property|boolean-property|reference-property|date-property|datetime-property|time-property|multiple-file-property|multiple-reference-property|sub-module|group)+)>
+<!ELEMENT sub-module (char-property|varchar-property|text-property|int-property|decimal-property|file-property|boolean-property|reference-property|date-property|datetime-property|time-property)+>
+<!ELEMENT group (char-property|varchar-property|text-property|int-property|decimal-property|boolean-property|reference-property|date-property|datetime-property|time-property)+>
+<!ELEMENT char-property EMPTY>
+<!ELEMENT varchar-property EMPTY>
+<!ELEMENT text-property EMPTY>
+<!ELEMENT int-property EMPTY>
+<!ELEMENT decimal-property EMPTY>
+<!ELEMENT file-property EMPTY>
+<!ELEMENT multiple-file-property EMPTY>
+<!ELEMENT boolean-property EMPTY>
+<!ELEMENT reference-property EMPTY>
+<!ELEMENT multiple-reference-property EMPTY>
+<!ELEMENT date-property EMPTY>
+<!ELEMENT datetime-property EMPTY>
+<!ELEMENT time-property EMPTY>
+<!ELEMENT code EMPTY>
+
+<!ENTITY % width 'width (1|2|3|4|5|6|7|8|9|10|11|12) "12"'>
+<!ATTLIST char-property %width;>
+<!ATTLIST varchar-property %width;>
+<!ATTLIST text-property %width;>
+<!ATTLIST int-property %width;>
+<!ATTLIST decimal-property %width;>
+<!ATTLIST boolean-property %width;>
+<!ATTLIST reference-property %width;>
+<!ATTLIST date-property %width;>
+<!ATTLIST time-property %width;>
+<!ATTLIST datetime-property %width;>
+
+<!ATTLIST regular-module name CDATA #REQUIRED>
+<!ATTLIST regular-module label CDATA "">
+<!ATTLIST regular-module to-string-java CDATA #REQUIRED>
+<!ATTLIST regular-module to-string-ts CDATA #REQUIRED>
+
+<!ATTLIST sub-module name CDATA #REQUIRED>
+<!ATTLIST sub-module label CDATA #REQUIRED>
+<!ATTLIST sub-module min CDATA "0">
+<!ATTLIST sub-module max CDATA "0">
+<!ATTLIST sub-module insertable (yes|no) "yes">
+<!ATTLIST sub-module updatable (yes|no) "yes">
+<!ATTLIST sub-module to-string-ts CDATA #REQUIRED>
+<!ATTLIST sub-module to-string-java CDATA #REQUIRED>
+
+<!ATTLIST char-property name CDATA #REQUIRED>
+<!ATTLIST char-property label CDATA #REQUIRED>
+<!ATTLIST char-property example CDATA #REQUIRED>
+<!ATTLIST char-property size CDATA #REQUIRED>
+<!ATTLIST char-property required (yes|no) "no">
+<!ATTLIST char-property unique (yes|no) "no">
+<!ATTLIST char-property pattern CDATA "">
+<!ATTLIST char-property insertable (yes|no) "yes">
+<!ATTLIST char-property updatable (yes|no) "yes">
+<!ATTLIST char-property searchable (yes|no) "no">
+<!ATTLIST char-property exist-on-table (yes|no) "no">
+<!ATTLIST char-property basic (yes|no) "no">
+<!ATTLIST char-property default-value CDATA "">
+
+
+<!ATTLIST varchar-property name CDATA #REQUIRED>
+<!ATTLIST varchar-property label CDATA #REQUIRED>
+<!ATTLIST varchar-property example CDATA #REQUIRED>
+<!ATTLIST varchar-property min-length CDATA "0">
+<!ATTLIST varchar-property max-length CDATA "255">
+<!ATTLIST varchar-property required (yes|no) "no">
+<!ATTLIST varchar-property unique (yes|no) "no">
+<!ATTLIST varchar-property pattern CDATA "">
+<!ATTLIST varchar-property insertable (yes|no) "yes">
+<!ATTLIST varchar-property updatable (yes|no) "yes">
+<!ATTLIST varchar-property searchable (yes|no) "no">
+<!ATTLIST varchar-property exist-on-table (yes|no) "no">
+<!ATTLIST varchar-property basic (yes|no) "no">
+<!ATTLIST varchar-property default-value CDATA "">
+
+<!ATTLIST text-property name CDATA #REQUIRED>
+<!ATTLIST text-property label CDATA #REQUIRED>
+<!ATTLIST text-property example CDATA #REQUIRED>
+<!ATTLIST text-property min-length CDATA "0">
+<!ATTLIST text-property max-length CDATA "65535">
+<!ATTLIST text-property required (yes|no) "no">
+<!ATTLIST text-property pattern CDATA "">
+<!ATTLIST text-property insertable (yes|no) "yes">
+<!ATTLIST text-property updatable (yes|no) "yes">
+<!ATTLIST text-property searchable (yes|no) "no">
+<!ATTLIST text-property exist-on-table (yes|no) "no">
+<!ATTLIST text-property basic (yes|no) "no">
+<!ATTLIST text-property default-value CDATA "">
+
+<!ATTLIST int-property name CDATA #REQUIRED>
+<!ATTLIST int-property label CDATA #REQUIRED>
+<!ATTLIST int-property example CDATA #REQUIRED>
+<!ATTLIST int-property size (1|2|3|4|5|6|7|8|9|10|11) "11">
+<!ATTLIST int-property min CDATA "-2147483648">
+<!ATTLIST int-property max CDATA "2147483647">
+<!ATTLIST int-property required (yes|no) "no">
+<!ATTLIST int-property unique (yes|no) "no">
+<!ATTLIST int-property insertable (yes|no) "yes">
+<!ATTLIST int-property updatable (yes|no) "yes">
+<!ATTLIST int-property searchable (yes|no) "no">
+<!ATTLIST int-property exist-on-table (yes|no) "no">
+<!ATTLIST int-property basic (yes|no) "no">
+<!ATTLIST int-property default-value CDATA "">
+
+<!ATTLIST decimal-property name CDATA #REQUIRED>
+<!ATTLIST decimal-property label CDATA #REQUIRED>
+<!ATTLIST decimal-property example CDATA #REQUIRED>
+<!ATTLIST decimal-property precision (2|3|5|6|7|8|9|10|11|12|13|14) #REQUIRED>
+<!ATTLIST decimal-property scale (1|2|3|4|5) #REQUIRED>
+<!ATTLIST decimal-property min CDATA #REQUIRED>
+<!ATTLIST decimal-property max CDATA #REQUIRED>
+<!ATTLIST decimal-property required (yes|no) "no">
+<!ATTLIST decimal-property unique (yes|no) "no">
+<!ATTLIST decimal-property insertable (yes|no) "yes">
+<!ATTLIST decimal-property updatable (yes|no) "yes">
+<!ATTLIST decimal-property searchable (yes|no) "no">
+<!ATTLIST decimal-property exist-on-table (yes|no) "no">
+<!ATTLIST decimal-property basic (yes|no) "no">
+<!ATTLIST decimal-property default-value CDATA "">
+
+<!ATTLIST file-property name CDATA #REQUIRED>
+<!ATTLIST file-property label CDATA #REQUIRED>
+<!ATTLIST file-property max-file-size CDATA "">
+<!ATTLIST file-property accept CDATA "">
+<!ATTLIST file-property required (yes|no) "no">
+<!ATTLIST file-property insertable (yes|no) "yes">
+<!ATTLIST file-property updatable (yes|no) "yes">
+<!ATTLIST file-property exist-on-table (yes|no) "no">
+<!ATTLIST file-property basic (yes|no) "no">
+
+<!ATTLIST multiple-file-property name CDATA #REQUIRED>
+<!ATTLIST multiple-file-property label CDATA #REQUIRED>
+<!ATTLIST multiple-file-property max-file-size CDATA "">
+<!ATTLIST multiple-file-property accept CDATA "">
+<!ATTLIST multiple-file-property insertable (yes|no) "yes">
+<!ATTLIST multiple-file-property updatable (yes|no) "yes">
+<!ATTLIST multiple-file-property min-count CDATA "0">
+<!ATTLIST multiple-file-property max-count CDATA "0">
+
+<!ATTLIST boolean-property name CDATA #REQUIRED>
+<!ATTLIST boolean-property label CDATA #REQUIRED>
+<!ATTLIST boolean-property yes-text CDATA "Yes">
+<!ATTLIST boolean-property insertable (yes|no) "yes">
+<!ATTLIST boolean-property updatable (yes|no) "yes">
+<!ATTLIST boolean-property searchable (yes|no) "no">
+<!ATTLIST boolean-property exist-on-table (yes|no) "no">
+<!ATTLIST boolean-property basic (yes|no) "no">
+<!ATTLIST boolean-property default-value (true|false) "false">
+
+<!ATTLIST reference-property name CDATA #REQUIRED>
+<!ATTLIST reference-property label CDATA #REQUIRED>
+<!ATTLIST reference-property required (yes|no) "no">
+<!ATTLIST reference-property unique (yes|no) "no">
+<!ATTLIST reference-property insertable (yes|no) "yes">
+<!ATTLIST reference-property updatable (yes|no) "yes">
+<!ATTLIST reference-property searchable (yes|no) "no">
+<!ATTLIST reference-property exist-on-table (yes|no) "no">
+<!ATTLIST reference-property basic (yes|no) "no">
+<!ATTLIST reference-property default-value CDATA "">
+<!ATTLIST reference-property to-string-java CDATA #REQUIRED>
+<!ATTLIST reference-property to-string-ts CDATA #REQUIRED>
+<!ATTLIST reference-property live (yes|no) "yes">
+<!ATTLIST reference-property service-method (getAll|getAllBasic) #REQUIRED>
+<!ATTLIST reference-property referenced-from CDATA #REQUIRED>
+<!--
+<!ATTLIST reference-property form-controller (mat-select|search-select|switches|radio) "mat-select">
+-->
+
+<!ATTLIST multiple-reference-property name CDATA #REQUIRED>
+<!ATTLIST multiple-reference-property label CDATA #REQUIRED>
+<!ATTLIST multiple-reference-property min-count CDATA "0">
+<!ATTLIST multiple-reference-property max-count CDATA "0">
+<!ATTLIST multiple-reference-property insertable (yes|no) "yes">
+<!ATTLIST multiple-reference-property updatable (yes|no) "yes">
+<!ATTLIST multiple-reference-property to-string-java CDATA #REQUIRED>
+<!ATTLIST multiple-reference-property to-string-ts CDATA #REQUIRED>
+<!ATTLIST multiple-reference-property service-method (getAll|getAllBasic) #REQUIRED>
+<!ATTLIST multiple-reference-property referenced-from CDATA #REQUIRED>
+<!--
+<!ATTLIST multiple-reference-property form-controller (dual-listbox|mat-select|search-select|checkbox) "dual-listbox">
+-->
+
+<!ATTLIST date-property name CDATA #REQUIRED>
+<!ATTLIST date-property label CDATA #REQUIRED>
+<!ATTLIST date-property example CDATA #REQUIRED><!--
+<!ATTLIST date-property min CDATA "">
+<!ATTLIST date-property max CDATA "">-->
+<!ATTLIST date-property required (yes|no) "no">
+<!ATTLIST date-property unique (yes|no) "no">
+<!ATTLIST date-property insertable (yes|no) "yes">
+<!ATTLIST date-property updatable (yes|no) "yes"><!--
+<!ATTLIST date-property searchable (yes|no) "no">-->
+<!ATTLIST date-property exist-on-table (yes|no) "no">
+<!ATTLIST date-property basic (yes|no) "no">
+<!ATTLIST date-property default-value CDATA "">
+
+<!ATTLIST datetime-property name CDATA #REQUIRED>
+<!ATTLIST datetime-property label CDATA #REQUIRED>
+<!ATTLIST datetime-property example CDATA #REQUIRED>
+<!--<!ATTLIST datetime-property min CDATA "">
+<!ATTLIST datetime-property max CDATA "">-->
+<!ATTLIST datetime-property required (yes|no) "no">
+<!ATTLIST datetime-property unique (yes|no) "no">
+<!ATTLIST datetime-property insertable (yes|no) "yes">
+<!ATTLIST datetime-property updatable (yes|no) "yes"><!--
+<!ATTLIST datetime-property searchable (yes|no) "no">-->
+<!ATTLIST datetime-property exist-on-table (yes|no) "no">
+<!ATTLIST datetime-property basic (yes|no) "no">
+<!ATTLIST datetime-property default-value CDATA "">
+
+<!ATTLIST time-property name CDATA #REQUIRED>
+<!ATTLIST time-property label CDATA #REQUIRED>
+<!ATTLIST time-property example CDATA #REQUIRED>
+<!--<!ATTLIST time-property min CDATA "">
+<!ATTLIST time-property max CDATA "">-->
+<!ATTLIST time-property required (yes|no) "no">
+<!ATTLIST time-property unique (yes|no) "no">
+<!ATTLIST time-property insertable (yes|no) "yes">
+<!ATTLIST time-property updatable (yes|no) "yes">
+<!--<!ATTLIST time-property searchable (yes|no) "no">-->
+<!ATTLIST time-property exist-on-table (yes|no) "no">
+<!ATTLIST time-property basic (yes|no) "no">
+<!ATTLIST time-property default-value CDATA "">
+
+<!ATTLIST code length CDATA #REQUIRED>
+<!ATTLIST code prefix CDATA "">
+<!ATTLIST code yearly-renew (yes|no) "yes">
+<!ATTLIST code insertable (yes|no) "no">
+<!ATTLIST code searchable (yes|no) "no">
+<!ATTLIST code exist-on-table (yes|no) "no">
+

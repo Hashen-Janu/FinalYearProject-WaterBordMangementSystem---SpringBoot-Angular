@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE main SYSTEM "./dtd/main.dtd">
+<main>
+    <database>
+        <name>water_board_agunukola</name>
+        <user>root</user>
+        <password>12345</password>
+        <host>localhost:3306</host>
+    </database>
+    <client>
+        <organization>Water Board Agunukolapalassa</organization>
+    </client>
+    <usertypes>
+        <usertype
+                module-name="employee"
+                basic-properties="id,code,nametitle,callingname,photo"
+                non-basic-properties="civilstatus,fullname,dobirth,gender,nic,mobile,land,email,address,designation,dorecruit,employeestatus,description"
+                to-string-java="employee.getCode() + #quat;-#quat; + employee.getNametitle().getName() + #quat; #quat; + employee.getCallingname()"
+                to-string-ts="employee.code + '-' + employee.nametitle.name + ' ' + employee.callingname"
+        />
+    </usertypes>
+</main>

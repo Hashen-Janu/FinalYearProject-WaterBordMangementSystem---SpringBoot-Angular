@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE seed SYSTEM "./../dtd/seed.dtd">
+<seed name="tasktype" to-string="{name}">
+    <properties>
+        <varchar-property name="name" size="45"/>
+    </properties>
+    <values>
+        <value><data>New Connection</data></value>
+        <value><data>Consumer Complain</data></value>
+        <value><data>Consumer Modification</data></value>
+        <value><data>Connection Disconnection</data></value>
+        <value><data>Connection Reconnection</data></value>
+    </values>
+</seed>
